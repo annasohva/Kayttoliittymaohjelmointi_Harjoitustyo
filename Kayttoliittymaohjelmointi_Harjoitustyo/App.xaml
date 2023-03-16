@@ -1,0 +1,9 @@
+﻿<Application x:Class="Kayttoliittymaohjelmointi_Harjoitustyo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
