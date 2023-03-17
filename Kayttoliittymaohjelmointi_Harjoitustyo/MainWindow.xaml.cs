@@ -20,6 +20,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            DataRepository.CreateDb();
         }
     }
 }

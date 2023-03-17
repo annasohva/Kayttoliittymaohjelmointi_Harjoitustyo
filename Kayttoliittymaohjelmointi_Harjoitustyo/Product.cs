@@ -5,7 +5,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// Luokka laskutettavaa tuotetta varten.
     /// </summary>
     internal class Product {
-        public string Code { get; private set; } = string.Empty;
+        public int ID { get; private set; } = -1;
+        public string Name { get; private set; } = string.Empty;
         public string Unit { get; private set; } = string.Empty;
         public double PricePerUnit { get; private set; }
 
@@ -15,8 +16,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="code">Tuotekoodi</param>
         /// <param name="unit">Yksikkö (kpl, m)</param>
         /// <param name="pricePerUnit">A-hinta</param>
-        public Product(string code, string unit, double pricePerUnit) {
-            Code = code;
+        public Product(string name, string unit, double pricePerUnit) {
+            Name= name;
             Unit = unit;
             PricePerUnit = pricePerUnit;
         }
