@@ -2,7 +2,8 @@
     /// <summary>
     /// Luokka osoitetietoja varten.
     /// </summary>
-    internal class Address {
+    public class Address {
+        public int ID { get; private set; } = -1;
         public string Name { get; private set; } = string.Empty; // ominaisuudet on private set, koska niitä muutetaan metodien avulla
         public string StreetAddress { get; private set; } = string.Empty;
         public string PostalCode { get; private set; } = string.Empty;

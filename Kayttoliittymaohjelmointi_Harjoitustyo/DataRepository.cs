@@ -16,5 +16,13 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public static void InsertCustomer(Address address) {
+            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("", conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

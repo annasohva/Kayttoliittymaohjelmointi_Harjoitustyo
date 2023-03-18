@@ -4,7 +4,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskuriviä varten.
     /// </summary>
-    internal class InvoiceLine {
+    public class InvoiceLine {
         public Product Product { get; private set; }
         public double Quantity { get; private set; }
         public double Total { get; private set; }

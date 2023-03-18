@@ -5,7 +5,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskun tietoja ja rivejä varten.
     /// </summary>
-    internal class Invoice {
+    public class Invoice {
         private readonly List<InvoiceLine> lines = new List<InvoiceLine>();
 
         public int ID { get; private set; } = -1;
@@ -17,14 +17,17 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public double Total { get; private set; } = -1;
 
         /// <summary>
-        /// Luo uuden laskun parametreinaan asiakkaan osoite ja vaihtoehtoiset lisätiedot.
-        /// Asettaa automaattisesti nykyisen päivämäärän, eräpäivän 30 päivän päähän ja laskuttajan osoitteen.
+        /// Luo uuden laskun ilman työn määrää ja hintaa.
         /// </summary>
         /// <param name="customerAddress">Asiakkaan osoite</param>
-        /// <param name="details">Vapaaehtoiset lisätiedot</param>
-        public Invoice(Address customerAddress, string details = "") {
-            Date = DateOnly.FromDateTime(DateTime.Now); // laskun päiväys on nykyinen päivä
-            DueDate = DateOnly.FromDateTime(DateTime.Now).AddDays(30); // laskun eräpäivä on 30 päivän päästä
+        /// <param name="date">Laskun päiväys</param>
+        /// <param name="duedate">Laskun eräpäivä</param>
+        /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
+        /// <param name="details">Laskun lisätiedot</param>
+        public Invoice(Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") {
+            ID = id;
+            Date = date;
+            DueDate = duedate;
 
             CustomerAddress = customerAddress;
             BillerAddress = Biller.Address;
@@ -33,14 +36,16 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         }
 
         /// <summary>
-        /// Luo uuden laskun parametreinaan työn hinta ja kesto, asiakkaan osoite ja mahdolliset lisätiedot.
-        /// Asettaa automaattisesti nykyisen päivämäärän, eräpäivän 30 päivän päähän ja laskuttajan osoitteen.
+        /// Luo uuden laskun työn määrällä ja hinnalla.
         /// </summary>
-        /// <param name="workQuantity">Työn kesto-</param>
-        /// <param name="workPricePerHour">Työn hinta per tunti</param>
+        /// <param name="workQuantity">Työn määrä tunneissa</param>
+        /// <param name="workPricePerHour">Työn tuntihinta</param>
         /// <param name="customerAddress">Asiakkaan osoite</param>
-        /// <param name="details">Vapaaehtoiset lisätiedot</param>
-        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, string details = "") : this(customerAddress, details) {
+        /// <param name="date">Laskun päiväys</param>
+        /// <param name="duedate">Laskun eräpäivä</param>
+        /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
+        /// <param name="details">Laskun lisätiedot</param>
+        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") : this(customerAddress, date, duedate, id, details) {
             Product work = new Product("Työ", "t", workPricePerHour);
             var line = new InvoiceLine(work, workQuantity);
             AddLine(line);
@@ -61,16 +66,6 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="date">Laskun uusi eräpäivä.</param>
         public void ChangeDueDate(DateOnly date) {
             DueDate = date; // toiminnallisuutta ei ole toteutettu, sillä sitä ei vaadittu
-        }
-
-        /// <summary>
-        /// Asettaa laskun yksilöivän numeron. Toimii vain jos ID on oletusarvossa eli -1.
-        /// </summary>
-        /// <param name="id">Yksilöivä numero.</param>
-        public void SetID(int id) {
-            if (ID == -1) {
-                ID = id;
-            }
         }
     }
 }
