@@ -10,13 +10,15 @@
         public string City { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Luo uuden osoitetiedon nimellä, katuosoitteella, postinumerolla ja postitoimipaikalla.
+        /// Luo uuden osoitetiedon.
         /// </summary>
         /// <param name="name">Yrityksen tai henkilön nimi</param>
         /// <param name="streetAddress">Katuosoite</param>
         /// <param name="postalCode">Postinumero</param>
         /// <param name="city">Kaupunki / Postitoimipaikka</param>
-        public Address(string name, string streetAddress, string postalCode, string city) {
+        /// <param name="id">Osoitetiedon ID. Jos uusi niin ei tarvitse asettaa.</param>
+        public Address(string name, string streetAddress, string postalCode, string city, int id = -1) {
+            ID = id;
             Name = name;
             ChangeAddress(streetAddress, postalCode, city);
         }

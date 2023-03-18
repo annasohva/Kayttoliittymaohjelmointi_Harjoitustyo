@@ -10,7 +10,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public double Total { get; private set; }
 
         /// <summary>
-        /// Luo uuden laskurivin tuoteobjektin ja määrätiedon avulla. Laskee tuotteiden kokonaishinnan.
+        /// Luo uuden laskurivin.
         /// </summary>
         /// <param name="product">Tuote-objekti.</param>
         /// <param name="quantity">Tuotteiden määrä.</param>

@@ -11,27 +11,15 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public double PricePerUnit { get; private set; }
 
         /// <summary>
-        /// Luo uuden tuotteen tuotteen nimellä, yksiköllä ja a-hinnalla.
+        /// Luo uuden tuote-olion.
         /// </summary>
         /// <param name="name">Tuotteen nimi</param>
         /// <param name="unit">Yksikkö (kpl, m)</param>
         /// <param name="pricePerUnit">A-hinta</param>
-        public Product(string name, string unit, double pricePerUnit) {
-            Name= name;
-            Unit = unit;
-            PricePerUnit = pricePerUnit;
-        }
-
-        /// <summary>
-        /// Luo uuden tuotteen id:llä tuotteen nimellä, yksiköllä ja a-hinnalla.
-        /// </summary>
-        /// <param name="id">Tuotteen ID</param>
-        /// <param name="name">Tuotteen nimi</param>
-        /// <param name="unit">Yksikkö (kpl, m)</param>
-        /// <param name="pricePerUnit">A-hinta</param>
-        public Product(int id, string name, string unit, double pricePerUnit) {
+        /// <param name="id">Tuotteen ID. Jos uusi tuote niin ei tarvitse asettaa.</param>
+        public Product(string name, string unit, double pricePerUnit, int id = -1) {
             ID = id;
-            Name = name;
+            Name= name;
             Unit = unit;
             PricePerUnit = pricePerUnit;
         }
