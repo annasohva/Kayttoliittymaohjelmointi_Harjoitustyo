@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskun tietoja ja rivejä varten.
     /// </summary>
     public class Invoice {
-        private readonly List<InvoiceLine> lines = new List<InvoiceLine>();
-
+        public readonly ObservableCollection<InvoiceLine> Lines = new ObservableCollection<InvoiceLine>();
         public int ID { get; private set; } = -1;
         public DateOnly Date { get; private set; }
         public DateOnly DueDate { get; private set; }
@@ -56,7 +56,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// </summary>
         /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
         public void AddLine(InvoiceLine line) {
-            lines.Add(line);
+            Lines.Add(line);
             this.Total += line.Total;
         }
 
@@ -65,7 +65,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// </summary>
         /// <param name="date">Laskun uusi eräpäivä.</param>
         public void ChangeDueDate(DateOnly date) {
-            DueDate = date; // toiminnallisuutta ei ole toteutettu, sillä sitä ei vaadittu
+            DueDate = date;
         }
     }
 }
