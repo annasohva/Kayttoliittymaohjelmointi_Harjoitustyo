@@ -11,4 +11,10 @@
     <PackageReference Include="MySqlConnector" Version="2.2.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="laskutussovellus_tietokannanluonti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

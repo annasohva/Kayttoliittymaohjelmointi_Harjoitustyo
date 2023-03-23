@@ -21,6 +21,9 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public MainWindow() {
             InitializeComponent();
             DataRepository.CreateDb();
+
+            var invoices = DataRepository.GetInvoices();
+            this.DataContext = invoices;
         }
     }
 }

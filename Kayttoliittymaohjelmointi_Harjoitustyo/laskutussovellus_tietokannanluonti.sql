@@ -26,15 +26,24 @@ CREATE TABLE Asiakkaat
 CREATE TABLE Laskut
 (
   LaskuID INT(20) NOT NULL AUTO_INCREMENT,
-  AsiakasID INT(20) NOT NULL,
   Paivays DATE NOT NULL,
   Erapaiva DATE NOT NULL,
   Lisatiedot VARCHAR(200) NULL,
-  PRIMARY KEY (LaskuID),
-  FOREIGN KEY (AsiakasID) REFERENCES Asiakkaat(AsiakasID)
+  PRIMARY KEY (LaskuID)
 );
 
-CREATE TABLE laskurivit -- tuotteet voi muuttua tai poistua niin samat tiedot tallennetaan joka laskuriville mitä tuotteet taulussa
+CREATE TABLE LaskujenAsiakkaat -- asiakkaat voi muuttua tai poistua niin laskujen asiakastiedot tallennetaan
+(
+  LaskuID INT(20) NOT NULL,
+  Nimi VARCHAR(100) NOT NULL,
+  Katuosoite VARCHAR(100) NOT NULL,
+  Postinumero VARCHAR(10) NOT NULL,
+  Kaupunki VARCHAR(50) NOT NULL,
+  PRIMARY KEY (LaskuID),
+  FOREIGN KEY (LaskuID) REFERENCES Laskut(LaskuID)
+);
+
+CREATE TABLE Laskurivit -- tuotteet voi muuttua tai poistua niin samat tiedot tallennetaan joka laskuriville mitä tuotteet taulussa
 (
   LaskuID INT(20) NOT NULL,
   LaskuriviID INT(50) NOT NULL AUTO_INCREMENT,
@@ -61,15 +70,23 @@ INSERT INTO asiakkaat(Nimi,Katuosoite,Postinumero,Kaupunki)
 	VALUES('Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
 	('Erkki Esimerkki','Esimerkkitie 2','80100','Joensuu'),
 	('Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu');
-	
-INSERT INTO laskut(Erapaiva,Lisatiedot,Paivays,AsiakasID)
-	VALUES("2023-03-29",'Lattiaremontti',"2023-02-27",1),
-	("2023-03-30",'Seinien maalaus',"2023-02-28",1),
-	("2023-04-04",'Keittioremontti, kaappien ovien vaihto',"2023-03-05",2),
-	("2023-04-07",'Lattiaremontti',"2023-03-08",3),
-	("2023-04-09",'Seinien maalaus',"2023-03-10",3),
-	("2023-04-16",NULL,"2023-03-17",1);
-	
+		
+INSERT INTO laskut(Erapaiva,Lisatiedot,Paivays)
+	VALUES("2023-03-29",'Lattiaremontti',"2023-02-27"),
+	("2023-03-30",'Seinien maalaus',"2023-02-28"),
+	("2023-04-04",'Keittioremontti, kaappien ovien vaihto',"2023-03-05"),
+	("2023-04-07",'Lattiaremontti',"2023-03-08"),
+	("2023-04-09",'Seinien maalaus',"2023-03-10"),
+	("2023-04-16",NULL,"2023-03-17");
+
+INSERT INTO laskujenasiakkaat(LaskuID,Nimi,Katuosoite,Postinumero,Kaupunki)
+	VALUES(1,'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
+	(2,'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
+	(3,'Erkki Esimerkki','Esimerkkitie 2','80100','Joensuu'),
+	(4,'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
+	(5,'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
+	(6,'Yritys Oy','Esimerkkitie 1','80100','Joensuu');
+
 INSERT INTO laskurivit(LaskuID,Tuotenimi,TuotteidenMaara,Yksikko,Yksikkohinta)
 	VALUES(1,'Tyo',10,'t',60),
 	(1,'Parketti',46,'m2',89.5),

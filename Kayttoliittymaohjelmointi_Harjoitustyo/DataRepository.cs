@@ -17,7 +17,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// Luo sovelluksen tietokannan käyttäen SQL-skriptitiedostoa.
         /// </summary>
         public static void CreateDb() {
-            string script = File.ReadAllText("laskutussovellus_tietokannanluonti.sql"); // sql-tiedosto tulisi sijoittaa samaan kansioon kuin exe, kopio löytyy kansiosta missä on .cs-tiedostot
+            string script = File.ReadAllText("laskutussovellus_tietokannanluonti.sql");
 
             using (MySqlConnection conn = new MySqlConnection(local)) {
                 conn.Open();
@@ -143,7 +143,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public static ObservableCollection<Invoice> GetInvoices() {
             var invoices = new ObservableCollection<Invoice>();
 
-            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+            await using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
                 conn.Open();
 
                 MySqlCommand cmdInvoices = new MySqlCommand("SELECT * FROM laskut;", conn);

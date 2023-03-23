@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Rakennus Oy Laskutus" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <Menu>
+            <MenuItem Header="Lasku">
+                <MenuItem Header="Uusi lasku..."/>
+                <MenuItem Header="Avaa..."/>
+                <Separator/>
+                <MenuItem Header="Teema..."/>
+            </MenuItem>
+            <MenuItem Header="Hallinta">
+                <MenuItem Header="Tuotekatalogi..."/>
+                <MenuItem Header="Osoitetiedot..."/>
+            </MenuItem>
+            <MenuItem Header="Ohje">
+                <MenuItem Header="Käyttöohje..."/>
+            </MenuItem>
+        </Menu>
+        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>
 </Window>
