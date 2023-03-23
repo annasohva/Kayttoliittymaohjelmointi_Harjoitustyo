@@ -1,9 +1,11 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
@@ -12,7 +14,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     public static class DataRepository {
         private const string local = @"Server=127.0.0.1; Port=3306; User ID=opiskelija; Pwd=opiskelija1;";
         private const string localWithDb = @"Server=127.0.0.1; Port=3306; User ID=opiskelija; Pwd=opiskelija1; Database=laskutus;";
-        
+
         /// <summary>
         /// Luo sovelluksen tietokannan käyttäen SQL-skriptitiedostoa.
         /// </summary>
@@ -143,57 +145,80 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public static ObservableCollection<Invoice> GetInvoices() {
             var invoices = new ObservableCollection<Invoice>();
 
-            await using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
                 conn.Open();
 
                 MySqlCommand cmdInvoices = new MySqlCommand("SELECT * FROM laskut;", conn);
                 var dr = cmdInvoices.ExecuteReader();
 
-                while (dr.Read()) { 
+                while (dr.Read()) {
                     int invoiceId = dr.GetInt32("LaskuID");
                     DateOnly date = dr.GetDateOnly("Paivays");
                     DateOnly duedate = dr.GetDateOnly("Erapaiva");
-                    string details = dr.GetString("Lisatiedot");
+                    string details = string.Empty;
 
-                    // haetaan laskun asiakkaan osoite
-                    MySqlCommand cmdCustomer = new MySqlCommand("SELECT * FROM laskujenasiakkaat WHERE LaskuID = @id;", conn);
-                    cmdCustomer.Parameters.AddWithValue("@id", invoiceId);
-                    var customerDr = cmdInvoices.ExecuteReader();
-
-                    Address address = null;
-                    while (customerDr.Read()) {
-                        string name = dr.GetString("Nimi");
-                        string streetAddress = dr.GetString("Katuosoite");
-                        string postalCode = dr.GetString("Postinumero");
-                        string city = dr.GetString("Kaupunki");
-
-                        address = new Address(name, streetAddress, postalCode, city);
+                    try {
+                        details = dr.GetString("Lisatiedot");
                     }
+                    catch (Exception) {
+                        details = string.Empty;
+                    }
+                    
+                    var address = GetInvoiceCustomer(invoiceId);
 
                     // luodaan itse lasku
                     Invoice invoice = new Invoice(address, date, duedate, invoiceId, details);
-                    
-                    // haetaan laskuun laskurivit
-                    MySqlCommand cmdInvoiceLines = new MySqlCommand("SELECT * FROM laskurivit WHERE LaskuID = @id;", conn);
-                    cmdInvoiceLines.Parameters.AddWithValue("@id", invoiceId);
-                    var linesDr = cmdInvoices.ExecuteReader();
 
-                    while (linesDr.Read()) {
-                        int lineId = linesDr.GetInt32("LaskuriviID");
-                        string productName = linesDr.GetString("Tuotenimi");
-                        double quantity = linesDr.GetDouble("TuotteidenMaara");
-                        string unit = linesDr.GetString("Yksikko");
-                        double pricePerUnit = linesDr.GetDouble("Yksikkohinta");
-
-                        Product product = new Product(productName, unit, pricePerUnit);
-                        invoice.AddLine(new InvoiceLine(product, quantity, lineId));
-                    }
+                    GetInvoiceLines(invoice);
 
                     invoices.Add(invoice);
                 }
             }
 
             return invoices;
+        }
+
+        private static Address GetInvoiceCustomer(int invoiceId) {
+            Address address = null;
+            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+                conn.Open();
+                // haetaan laskun asiakkaan osoite
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM laskujenasiakkaat WHERE LaskuID = @id;", conn);
+                cmd.Parameters.AddWithValue("@id", invoiceId);
+                var dr = cmd.ExecuteReader();
+
+                while (dr.Read()) {
+                    string name = dr.GetString("Nimi");
+                    string streetAddress = dr.GetString("Katuosoite");
+                    string postalCode = dr.GetString("Postinumero");
+                    string city = dr.GetString("Kaupunki");
+
+                    address = new Address(name, streetAddress, postalCode, city);
+                }
+            }
+            return address;
+        }
+
+        private static void GetInvoiceLines(Invoice invoice) {
+            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+                conn.Open();
+
+                // haetaan laskuun laskurivit
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM laskurivit WHERE LaskuID = @id;", conn);
+                cmd.Parameters.AddWithValue("@id", invoice.ID);
+                var dr = cmd.ExecuteReader();
+
+                while (dr.Read()) {
+                    int lineId = dr.GetInt32("LaskuriviID");
+                    string productName = dr.GetString("Tuotenimi");
+                    double quantity = dr.GetDouble("TuotteidenMaara");
+                    string unit = dr.GetString("Yksikko");
+                    double pricePerUnit = dr.GetDouble("Yksikkohinta");
+
+                    Product product = new Product(productName, unit, pricePerUnit);
+                    invoice.AddLine(new InvoiceLine(product, quantity, lineId));
+                }
+            }
         }
 
         /// <summary>
