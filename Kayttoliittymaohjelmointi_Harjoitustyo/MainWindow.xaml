@@ -38,7 +38,7 @@
                 <DataGridTextColumn Header="Lisätiedot" IsReadOnly="True" Binding="{Binding Details}"/>
                 <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding Total}"/>
 
-                <DataGridTemplateColumn Width="80">
+                <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Tarkastele" Width="70"/>
