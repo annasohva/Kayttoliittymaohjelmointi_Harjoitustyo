@@ -12,21 +12,40 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <Grid.Resources>
+            
+        </Grid.Resources>
+        
         <Menu>
-            <MenuItem Header="Lasku">
-                <MenuItem Header="Uusi lasku..."/>
-                <MenuItem Header="Avaa..."/>
-                <Separator/>
-                <MenuItem Header="Teema..."/>
-            </MenuItem>
             <MenuItem Header="Hallinta">
+                <MenuItem Header="Uusi lasku..."/>
+                <Separator/>
                 <MenuItem Header="Tuotekatalogi..."/>
                 <MenuItem Header="Osoitetiedot..."/>
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>
+                <Separator/>
+                <MenuItem Header="Teema..."/>
             </MenuItem>
         </Menu>
-        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Päiväys" IsReadOnly="True" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Eräpäivä" IsReadOnly="True" Binding="{Binding DueDate}"/>
+                <DataGridTextColumn Header="Asiakas" IsReadOnly="True" Binding="{Binding CustomerAddress.Name}"/>
+                <DataGridTextColumn Header="Lisätiedot" IsReadOnly="True" Binding="{Binding Details}"/>
+                <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding Total}"/>
+
+                <DataGridTemplateColumn Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Tarkastele" Width="70"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
