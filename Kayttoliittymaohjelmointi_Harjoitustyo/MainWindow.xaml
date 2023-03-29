@@ -34,7 +34,7 @@
                 <DataGridTextColumn Header="Eräpäivä" IsReadOnly="True" Binding="{Binding DueDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                 <DataGridTextColumn Header="Asiakas" IsReadOnly="True" Binding="{Binding CustomerAddress.Name}"/>
                 <DataGridTextColumn Header="Lisätiedot" IsReadOnly="True" Binding="{Binding Details}"/>
-                <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding Total}"/>
+                <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding RoundedTotal}"/>
 
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>

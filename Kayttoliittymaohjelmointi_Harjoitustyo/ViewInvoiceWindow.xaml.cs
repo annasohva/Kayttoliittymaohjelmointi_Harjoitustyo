@@ -19,6 +19,10 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
     /// </summary>
     public partial class ViewInvoiceWindow : Window
     {
+        /// <summary>
+        /// Luo uuden ikkunan laskun tarkastelemista varten.
+        /// </summary>
+        /// <param name="invoice">Lasku jota tarkastellaan.</param>
         public ViewInvoiceWindow(Invoice invoice)
         {
             InitializeComponent();

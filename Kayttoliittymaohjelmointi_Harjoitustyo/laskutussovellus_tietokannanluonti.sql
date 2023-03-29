@@ -9,7 +9,7 @@ CREATE TABLE Tuotteet
   TuoteID INT(20) NOT NULL AUTO_INCREMENT,
   Tuotenimi VARCHAR(50) NOT NULL,
   Yksikko VARCHAR(15) NOT NULL,
-  Yksikkohinta FLOAT(8,2) NOT NULL,
+  Yksikkohinta DECIMAL(8,2) NOT NULL,
   PRIMARY KEY (TuoteID)
 );
 
@@ -48,9 +48,9 @@ CREATE TABLE Laskurivit -- tuotteet voi muuttua tai poistua niin samat tiedot ta
   LaskuID INT(20) NOT NULL,
   LaskuriviID INT(50) NOT NULL AUTO_INCREMENT,
   Tuotenimi VARCHAR(50) NOT NULL,
-  TuotteidenMaara FLOAT(8,2) NOT NULL,
+  TuotteidenMaara DECIMAL(8,2) NOT NULL,
   Yksikko VARCHAR(15) NOT NULL,
-  Yksikkohinta FLOAT(8,2) NOT NULL,
+  Yksikkohinta DECIMAL(8,2) NOT NULL,
   PRIMARY KEY (LaskuriviID),
   FOREIGN KEY (LaskuID) REFERENCES Laskut(LaskuID)
 );

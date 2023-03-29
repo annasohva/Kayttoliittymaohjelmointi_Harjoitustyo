@@ -4,10 +4,10 @@
     /// </summary>
     public class Address {
         public int ID { get; private set; } = -1;
-        public string Name { get; private set; } = string.Empty; // ominaisuudet on private set, koska niitä muutetaan metodien avulla
-        public string StreetAddress { get; private set; } = string.Empty;
-        public string PostalCode { get; private set; } = string.Empty;
-        public string City { get; private set; } = string.Empty;
+        public string Name { get; set; } = string.Empty; // ominaisuudet on private set, koska niitä muutetaan metodien avulla
+        public string StreetAddress { get; set; } = string.Empty;
+        public string PostalCode { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
 
         /// <summary>
         /// Luo uuden osoitetiedon.
@@ -20,27 +20,9 @@
         public Address(string name, string streetAddress, string postalCode, string city, int id = -1) {
             ID = id;
             Name = name;
-            ChangeAddress(streetAddress, postalCode, city);
-        }
-
-        /// <summary>
-        /// Muuttaa osoitetiedoista katuosoitteen, postinumeron ja postitoimipaikan.
-        /// </summary>
-        /// <param name="streetAddress">Katuosoite</param>
-        /// <param name="postalCode">Postinumero</param>
-        /// <param name="city">Kaupunki / Postitoimipaikka</param>
-        public void ChangeAddress(string streetAddress, string postalCode, string city) {
-            StreetAddress = streetAddress;
+            StreetAddress= streetAddress;
             PostalCode = postalCode;
-            City = city.ToUpper();
-        }
-
-        /// <summary>
-        /// Muuttaa osoitetiedoista nimen.
-        /// </summary>
-        /// <param name="name">Yrityksen tai henkilön nimi.</param>
-        public void ChangeName(string name) {
-            Name = name;
+            City = city;
         }
     }
 }

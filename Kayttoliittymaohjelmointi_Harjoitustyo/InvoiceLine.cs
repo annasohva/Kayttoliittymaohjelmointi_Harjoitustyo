@@ -9,6 +9,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public Product Product { get; private set; }
         public double Quantity { get; private set; }
         public double Total { get; private set; }
+        public double RoundedTotal { get; private set; }
 
         /// <summary>
         /// Luo uuden laskurivin.
@@ -20,6 +21,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             Product = product;
             Quantity = quantity;
             Total = product.PricePerUnit * quantity;
+            RoundedTotal = Math.Round(Total, 2);
         }
     }
 }

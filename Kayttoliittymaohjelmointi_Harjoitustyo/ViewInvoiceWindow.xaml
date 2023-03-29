@@ -17,17 +17,57 @@
                 <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
-        <TextBox Text="{Binding Details}"/>
-        <Label Content="{Binding Date}"/>
-        
-        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Päiväys:"/>
+                    <Label Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Laskun numero:"/>
+                    <Label Content="{Binding ID}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Eräpäivä:"/>
+                    <DatePicker SelectedDate="{Binding DueDate}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <Label Content="Asiakas:"/>
+                <TextBox Text="{Binding CustomerAddress.Name}"/>
+                <TextBox Text="{Binding CustomerAddress.StreetAddress}"/>
+                <TextBox Text="{Binding CustomerAddress.PostalCode}"/>
+                <TextBox Text="{Binding CustomerAddress.City}"/>
+            </StackPanel>
+        </Grid>
+
+        <Label Content="Lisätiedot:" Margin="10,0,0,0"/>
+        <TextBox Text="{Binding Details}" Margin="10,0,10,10"/>
+
+        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tuote" Binding="{Binding Product.Name}"/>
-                <DataGridTextColumn Header="Määrä" Binding="{Binding Quantity}"/>
-                <DataGridTextColumn Header="Yksikkö" Binding="{Binding Product.Unit}"/>
-                <DataGridTextColumn Header="A-hinta" Binding="{Binding Product.PricePerUnit}"/>
-                <DataGridTextColumn Header="Yhteensä" Binding="{Binding Total}"/>
+                <DataGridTextColumn Width="20*" Header="Tuote" Binding="{Binding Product.Name}"/>
+                <DataGridTextColumn Width="20*" Header="Määrä" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Width="20*" Header="Yksikkö" Binding="{Binding Product.Unit}"/>
+                <DataGridTextColumn Width="20*" Header="A-hinta" Binding="{Binding Product.PricePerUnit}"/>
+                <DataGridTextColumn Width="20*" Header="Yhteensä" Binding="{Binding RoundedTotal}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Label Content="Kokonaishinta:"/>
+            <Label Content="{Binding RoundedTotal}"/>
+            <Label Content="€"/>
+        </StackPanel>
     </StackPanel>
 </Window>

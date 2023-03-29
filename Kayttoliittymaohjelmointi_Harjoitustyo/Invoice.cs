@@ -10,16 +10,16 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public readonly ObservableCollection<InvoiceLine> Lines = new ObservableCollection<InvoiceLine>();
         public int ID { get; private set; } = -1;
         public DateOnly Date { get; private set; }
-        public DateOnly DueDate { get; private set; }
+        public DateOnly DueDate { get; set; }
         public Address BillerAddress { get; private set; }
         public Address CustomerAddress { get; private set; }
         public string Details { get; set; } = string.Empty;
-        public double Total {
+        public double RoundedTotal {
             get {
-                return Math.Round(unroundedTotal,2);
+                return Math.Round(total,2);
             }
         }
-        private double unroundedTotal = -1;
+        private double total = -1;
 
         /// <summary>
         /// Luo uuden laskun ilman työn määrää ja hintaa.
@@ -61,16 +61,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// </summary>
         /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
         public void AddLine(InvoiceLine line) {
+            if (total == -1) {
+                total = 0;
+            }
             Lines.Add(line);
-            this.unroundedTotal += line.Total;
-        }
-
-        /// <summary>
-        /// Muuttaa laskun eräpäivää.
-        /// </summary>
-        /// <param name="date">Laskun uusi eräpäivä.</param>
-        public void ChangeDueDate(DateOnly date) {
-            DueDate = date;
+            this.total += line.Total;
         }
     }
 }
