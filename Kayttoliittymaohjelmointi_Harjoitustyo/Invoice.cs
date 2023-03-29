@@ -20,6 +20,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
         private double unroundedTotal = -1;
+
         /// <summary>
         /// Luo uuden laskun ilman työn määrää ja hintaa.
         /// </summary>

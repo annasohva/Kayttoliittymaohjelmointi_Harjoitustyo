@@ -23,6 +23,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
         {
             InitializeComponent();
 
+            dataGridLines.ItemsSource = invoice.Lines;
             this.DataContext = invoice;
         }
     }

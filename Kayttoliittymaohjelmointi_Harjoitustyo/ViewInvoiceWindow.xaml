@@ -17,8 +17,17 @@
                 <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
-        <DataGrid d:ItemsSource="{Binding Lines}">
-            
+        <TextBox Text="{Binding Details}"/>
+        <Label Content="{Binding Date}"/>
+        
+        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tuote" Binding="{Binding Product.Name}"/>
+                <DataGridTextColumn Header="Määrä" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="Yksikkö" Binding="{Binding Product.Unit}"/>
+                <DataGridTextColumn Header="A-hinta" Binding="{Binding Product.PricePerUnit}"/>
+                <DataGridTextColumn Header="Yhteensä" Binding="{Binding Total}"/>
+            </DataGrid.Columns>
         </DataGrid>
     </StackPanel>
 </Window>
