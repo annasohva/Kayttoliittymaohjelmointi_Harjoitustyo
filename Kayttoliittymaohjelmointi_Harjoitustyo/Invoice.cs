@@ -14,8 +14,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public Address BillerAddress { get; private set; }
         public Address CustomerAddress { get; private set; }
         public string Details { get; set; } = string.Empty;
-        public double Total { get; private set; } = -1;
-
+        public double Total {
+            get {
+                return Math.Round(unroundedTotal,2);
+            }
+        }
+        private double unroundedTotal = -1;
         /// <summary>
         /// Luo uuden laskun ilman työn määrää ja hintaa.
         /// </summary>
@@ -24,7 +28,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="duedate">Laskun eräpäivä</param>
         /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
         /// <param name="details">Laskun lisätiedot</param>
-        public Invoice(Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") {
+        public Invoice(Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "-") {
             ID = id;
             Date = date;
             DueDate = duedate;
@@ -45,7 +49,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="duedate">Laskun eräpäivä</param>
         /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
         /// <param name="details">Laskun lisätiedot</param>
-        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") : this(customerAddress, date, duedate, id, details) {
+        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "-") : this(customerAddress, date, duedate, id, details) {
             Product work = new Product("Työ", "t", workPricePerHour);
             var line = new InvoiceLine(work, workQuantity);
             AddLine(line);
@@ -57,7 +61,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
         public void AddLine(InvoiceLine line) {
             Lines.Add(line);
-            this.Total += line.Total;
+            this.unroundedTotal += line.Total;
         }
 
         /// <summary>

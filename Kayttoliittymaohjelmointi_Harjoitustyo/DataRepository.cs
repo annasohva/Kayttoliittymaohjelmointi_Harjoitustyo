@@ -175,7 +175,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                         details = dr.GetString("Lisatiedot");
                     }
                     catch (Exception) {
-                        details = string.Empty;
+                        details = "-";
                     }
 
                     var address = GetInvoiceCustomer(invoiceId);

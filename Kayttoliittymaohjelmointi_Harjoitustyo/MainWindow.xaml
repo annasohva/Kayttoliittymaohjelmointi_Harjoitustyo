@@ -25,15 +25,13 @@
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>
-                <Separator/>
-                <MenuItem Header="Teema..."/>
             </MenuItem>
         </Menu>
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ID}"/>
-                <DataGridTextColumn Header="Päiväys" IsReadOnly="True" Binding="{Binding Date}"/>
-                <DataGridTextColumn Header="Eräpäivä" IsReadOnly="True" Binding="{Binding DueDate}"/>
+                <DataGridTextColumn Header="Päiväys" IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                <DataGridTextColumn Header="Eräpäivä" IsReadOnly="True" Binding="{Binding DueDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
                 <DataGridTextColumn Header="Asiakas" IsReadOnly="True" Binding="{Binding CustomerAddress.Name}"/>
                 <DataGridTextColumn Header="Lisätiedot" IsReadOnly="True" Binding="{Binding Details}"/>
                 <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding Total}"/>
@@ -41,7 +39,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Tarkastele" Width="70"/>
+                            <Button Content="Tarkastele" Width="70" Click="View_Invoice_Clicked"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
