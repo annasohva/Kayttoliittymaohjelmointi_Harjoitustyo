@@ -19,7 +19,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// Luo sovelluksen tietokannan käyttäen SQL-skriptitiedostoa.
         /// </summary>
         public static void CreateDb() {
-            string script = File.ReadAllText("laskutussovellus_tietokannanluonti.sql");
+            string script = File.ReadAllText("SQL/laskutussovellus_tietokannanluonti.sql");
 
             using (MySqlConnection conn = new MySqlConnection(local)) {
                 conn.Open();

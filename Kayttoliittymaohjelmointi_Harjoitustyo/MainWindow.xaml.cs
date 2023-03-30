@@ -31,8 +31,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             var obj = sender as FrameworkElement; 
             var invoice = obj.DataContext as Invoice;
 
-            var invoiceWindow = new InvoiceWindow(invoice);
-            invoiceWindow.Show();
+            var invoiceWindow = new ViewInvoiceWindow(invoice);
+            invoiceWindow.ShowDialog();
         }
     }
 }

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="laskutussovellus_tietokannanluonti.sql">
+    <None Update="SQL\laskutussovellus_tietokannanluonti.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
