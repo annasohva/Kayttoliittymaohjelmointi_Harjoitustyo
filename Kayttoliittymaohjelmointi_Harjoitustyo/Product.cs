@@ -5,10 +5,15 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// Luokka laskutettavaa tuotetta varten.
     /// </summary>
     public class Product {
-        public int ID { get; private set; } = -1;
-        public string Name { get; private set; } = string.Empty;
-        public string Unit { get; private set; } = string.Empty;
-        public double PricePerUnit { get; private set; }
+        public int ID { get; set; } = -1;
+        public string Name { get; set; } = string.Empty;
+        public string Unit { get; set; } = string.Empty;
+        public double PricePerUnit { get; set; }
+
+        /// <summary>
+        /// Luo uuden tuote-olion.
+        /// </summary>
+        public Product() { }
 
         /// <summary>
         /// Luo uuden tuote-olion.

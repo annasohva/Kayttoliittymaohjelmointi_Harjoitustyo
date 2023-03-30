@@ -17,13 +17,25 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
     /// <summary>
     /// Interaction logic for ViewInvoiceWindow.xaml
     /// </summary>
-    public partial class ViewInvoiceWindow : Window
+    public partial class InvoiceWindow : Window
     {
+        /// <summary>
+        /// Luo uuden ikkunan uuden laskun luomista varten.
+        /// </summary>
+        public InvoiceWindow() {
+            InitializeComponent();
+
+            Invoice invoice = new Invoice(0, 0, new Address(), DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(30)));
+
+            dataGridLines.ItemsSource = invoice.Lines;
+            this.DataContext = invoice;
+        }
+
         /// <summary>
         /// Luo uuden ikkunan laskun tarkastelemista varten.
         /// </summary>
         /// <param name="invoice">Lasku jota tarkastellaan.</param>
-        public ViewInvoiceWindow(Invoice invoice)
+        public InvoiceWindow(Invoice invoice)
         {
             InitializeComponent();
 

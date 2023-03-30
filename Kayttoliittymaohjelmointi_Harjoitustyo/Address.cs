@@ -12,6 +12,11 @@
         /// <summary>
         /// Luo uuden osoitetiedon.
         /// </summary>
+        public Address() { }
+
+        /// <summary>
+        /// Luo uuden osoitetiedon.
+        /// </summary>
         /// <param name="name">Yrityksen tai henkilön nimi</param>
         /// <param name="streetAddress">Katuosoite</param>
         /// <param name="postalCode">Postinumero</param>

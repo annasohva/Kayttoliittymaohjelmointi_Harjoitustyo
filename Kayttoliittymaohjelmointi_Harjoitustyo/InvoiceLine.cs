@@ -6,8 +6,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// </summary>
     public class InvoiceLine {
         public int ID { get; private set; } = -1;
-        public Product Product { get; private set; }
-        public double Quantity { get; private set; }
+        public Product Product { get; set; }
+        public double Quantity { get; set; }
         public double Total { get; private set; }
         public double RoundedTotal { get; private set; }
 
@@ -20,7 +20,14 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             ID = id;
             Product = product;
             Quantity = quantity;
-            Total = product.PricePerUnit * quantity;
+            UpdateTotal();
+        }
+
+        /// <summary>
+        /// Päivittää laskurivin kokonaishinnan.
+        /// </summary>
+        public void UpdateTotal() {
+            Total = Product.PricePerUnit * Quantity;
             RoundedTotal = Math.Round(Total, 2);
         }
     }

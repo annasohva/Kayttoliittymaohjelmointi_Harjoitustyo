@@ -29,7 +29,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="duedate">Laskun eräpäivä</param>
         /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
         /// <param name="details">Laskun lisätiedot</param>
-        public Invoice(Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "-") {
+        public Invoice(Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") {
             ID = id;
             Date = date;
             DueDate = duedate;
@@ -50,7 +50,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <param name="duedate">Laskun eräpäivä</param>
         /// <param name="id">Laskun ID. Jos uusi lasku niin ei tarvitse asettaa.</param>
         /// <param name="details">Laskun lisätiedot</param>
-        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "-") : this(customerAddress, date, duedate, id, details) {
+        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") : this(customerAddress, date, duedate, id, details) {
             Product work = new Product("Työ", "t", workPricePerHour);
             var line = new InvoiceLine(work, workQuantity);
             AddLine(line);
@@ -66,6 +66,17 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
             Lines.Add(line);
             this.total += line.Total;
+        }
+
+        /// <summary>
+        /// Päivittää laskurivin kokonaissumman.
+        /// </summary>
+        public void UpdateTotal() {
+            total = 0;
+
+            foreach (var line in Lines) {
+                this.total += line.Total;
+            }
         }
     }
 }

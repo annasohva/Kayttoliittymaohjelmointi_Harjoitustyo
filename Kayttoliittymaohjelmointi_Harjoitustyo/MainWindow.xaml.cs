@@ -27,11 +27,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         }
 
         private void View_Invoice_Clicked(object sender, RoutedEventArgs e) {
-            // löysin stackoverflowista ratkaisun miten saa senderistä datacontextin, kun löysin sen debuggerissa senderiltä
+            // löysin stackoverflowista ratkaisun miten saa senderistä datacontextin, kun löysin sen debuggerissa senderin ominaisuutena
             var obj = sender as FrameworkElement; 
             var invoice = obj.DataContext as Invoice;
 
-            var invoiceWindow = new ViewInvoiceWindow(invoice);
+            var invoiceWindow = new InvoiceWindow(invoice);
             invoiceWindow.Show();
         }
     }
