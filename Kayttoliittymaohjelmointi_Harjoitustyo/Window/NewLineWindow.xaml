@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
         mc:Ignorable="d"
-        Title="NewLineWindow" Height="450" Width="800">
+        Title="Uusi laskurivi" Height="200" Width="500">
     <Grid>
-        
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
+            <StackPanel>
+                <Label Content="Tuote:"/>
+                <ComboBox x:Name="comProducts">
+
+                </ComboBox>
+            </StackPanel>
+            
+            <StackPanel>
+                <Label Content="Määrä:"/>
+                <TextBox/>
+            </StackPanel>
+
+            <StackPanel>
+                <Label Content="Yksikkö:"/>
+                <Label/>
+            </StackPanel>
+
+            <StackPanel>
+                <Label Content="A-hinta:"/>
+                <TextBox/>
+            </StackPanel>
+
+            <StackPanel>
+                <Label Content="Yhteensä:"/>
+                <Label/>
+            </StackPanel>
+
+            
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="Lisää laskurivi" Width="75" Height="25" Margin="10,10,5,20"/>
+            <Button Content="Peru" Width="75" Height="25" Margin="5,10,20,20"/>
+        </StackPanel>
     </Grid>
 </Window>

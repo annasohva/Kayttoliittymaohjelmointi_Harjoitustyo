@@ -19,7 +19,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
     /// </summary>
     public partial class NewLineWindow : Window
     {
-        public NewLineWindow()
+        public NewLineWindow(Invoice invoice)
         {
             InitializeComponent();
         }

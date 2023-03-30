@@ -70,6 +70,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
                 DataRepository.InsertInvoiceLine(line, invoice.ID);
             }
 
+            DataRepository.UpdateInvoice(invoice);
+
             MessageBox.Show("Tiedot on tallennettu tietokantaan.", "Viesti");
         }
 
@@ -82,6 +84,20 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
                 MessageBox.Show("Lasku on poistettu tietokannasta.", "Viesti");
                 this.Close();
             }
+        }
+
+        private void dueDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
+            Invoice invoice = this.DataContext as Invoice;
+
+            if (dueDatePicker.SelectedDate != null && invoice != null) {
+                invoice.DueDate = DateOnly.FromDateTime((DateTime)dueDatePicker.SelectedDate);
+            }
+        }
+
+        private void AddLine_Clicked(object sender, RoutedEventArgs e) {
+            Invoice invoice = this.DataContext as Invoice;
+            var newLineWindow = new NewLineWindow(invoice);
+            newLineWindow.ShowDialog();
         }
     }
 }

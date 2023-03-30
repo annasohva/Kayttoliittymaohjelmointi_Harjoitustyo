@@ -50,7 +50,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Eräpäivä:"/>
-                    <DatePicker x:Name="dueDatePicker"/>
+                    <DatePicker x:Name="dueDatePicker" SelectedDateChanged="dueDatePicker_SelectedDateChanged" />
                 </StackPanel>
             </StackPanel>
             <GroupBox Header="Asiakas" Grid.Row="1">
@@ -85,7 +85,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Grid>
-            <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0" Click="AddLine_Clicked" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <Label Content="Kokonaishinta:"/>
                 <Label Content="{Binding RoundedTotal}"/>

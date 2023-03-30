@@ -102,7 +102,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 conn.Open();
 
                 // päivitetään laskun tiedot, laskun päiväys ei kuitenkaan muutu koska se on automaattinen
-                MySqlCommand cmd1 = new MySqlCommand("UPDATE laskut SET Erapaiva=@duedate, Lisatiedot=@details " +
+                MySqlCommand cmd1 = new MySqlCommand("UPDATE laskut SET Erapaiva=@duedate, Lisatiedot=@details, " +
                     "AsiakasNimi=@cName, AsiakasKatuosoite=@cStreetAddr, AsiakasPostinumero=@cPostalCode, AsiakasKaupunki=@cCity " +
                     "WHERE LaskuID=@id;", conn);
 
@@ -117,13 +117,13 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
                 // päivitetään laskurivin tiedot
                 foreach (var line in invoice.Lines) {
-                    MySqlCommand cmd3 = new MySqlCommand("UPDATE laskurivit SET Tuotenimi=@productName, TuotteidenMaara=@quantity, Yksikko=@unit, Yksikkohinta=@pricePerUnit WHERE LaskuriviID=@id;", conn);
-                    cmd3.Parameters.AddWithValue("@productName", line.Product.Name);
-                    cmd3.Parameters.AddWithValue("@quantity", line.Quantity);
-                    cmd3.Parameters.AddWithValue("@unit", line.Product.Unit);
-                    cmd3.Parameters.AddWithValue("@pricePerUnit", line.Product.PricePerUnit);
-                    cmd3.Parameters.AddWithValue("@id", line.ID);
-                    cmd3.ExecuteNonQuery();
+                    MySqlCommand cmd2 = new MySqlCommand("UPDATE laskurivit SET Tuotenimi=@productName, TuotteidenMaara=@quantity, Yksikko=@unit, Yksikkohinta=@pricePerUnit WHERE LaskuriviID=@id;", conn);
+                    cmd2.Parameters.AddWithValue("@productName", line.Product.Name);
+                    cmd2.Parameters.AddWithValue("@quantity", line.Quantity);
+                    cmd2.Parameters.AddWithValue("@unit", line.Product.Unit);
+                    cmd2.Parameters.AddWithValue("@pricePerUnit", line.Product.PricePerUnit);
+                    cmd2.Parameters.AddWithValue("@id", line.ID);
+                    cmd2.ExecuteNonQuery();
                 }
             }
         }
