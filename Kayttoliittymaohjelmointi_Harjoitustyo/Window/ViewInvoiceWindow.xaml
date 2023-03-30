@@ -9,9 +9,9 @@
     <StackPanel>
         <Menu>
             <MenuItem Header="Lasku">
-                <MenuItem Header="Tallenna muutokset"/>
+                <MenuItem Header="Tallenna muutokset" Click="Save_MenuItem_Click"/>
                 <Separator/>
-                <MenuItem Header="Poista lasku..."/>
+                <MenuItem Header="Poista lasku..." Click="DeleteInvoice_MenuItem_Click" />
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>
@@ -50,7 +50,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Eräpäivä:"/>
-                    <DatePicker SelectedDate="{Binding DueDate}"/>
+                    <DatePicker x:Name="dueDatePicker"/>
                 </StackPanel>
             </StackPanel>
             <GroupBox Header="Asiakas" Grid.Row="1">
@@ -78,7 +78,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Poista"/>
+                            <Button Content="Poista" Click="Remove_Line_Clicked" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -92,6 +92,6 @@
                 <Label Content="€"/>
             </StackPanel>
         </Grid>
-        <Button Height="25" Width="80" Content="Tallenna" HorizontalAlignment="Right" Margin="0,10,10,0"/>
+        <Button Height="25" Width="80" Content="Tallenna" HorizontalAlignment="Right" Margin="0,10,10,0" Click="Save_Btn_Clicked" />
     </StackPanel>
 </Window>

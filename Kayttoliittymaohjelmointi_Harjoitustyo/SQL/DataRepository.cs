@@ -39,42 +39,57 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 conn.Open();
 
                 // lisätään lasku tietokantaan
-                MySqlCommand cmd1 = new MySqlCommand("INSERT INTO laskut(Paivays, Erapaiva, Lisatiedot) VALUES(@date, @duedate, @details);", conn);
+                MySqlCommand cmd1 = new MySqlCommand("INSERT INTO laskut(Paivays, Erapaiva, Lisatiedot, AsiakasNimi, AsiakasKatuosoite, AsiakasPostinumero, AsiakasKaupunki) " +
+                    "VALUES(@date, @duedate, @details, @cName, @cStreetAddr, @cPostalCode, @cCity);", conn);
                 cmd1.Parameters.AddWithValue("@date", invoice.Date);
                 cmd1.Parameters.AddWithValue("@duedate", invoice.DueDate);
                 cmd1.Parameters.AddWithValue("@details", invoice.Details);
+                cmd1.Parameters.AddWithValue("@cName", invoice.CustomerAddress.Name);
+                cmd1.Parameters.AddWithValue("@cStreetAddr", invoice.CustomerAddress.StreetAddress);
+                cmd1.Parameters.AddWithValue("@cPostalCode", invoice.CustomerAddress.PostalCode);
+                cmd1.Parameters.AddWithValue("@cCity", invoice.CustomerAddress.City);
                 cmd1.ExecuteNonQuery();
 
+                // haetaan juuri lisätyn laskun LaskuID jotta voidaan lisätä laskurivit
                 MySqlCommand cmd2 = new MySqlCommand("SELECT MAX(LaskuID) FROM laskut;", conn);
                 var dr = cmd2.ExecuteReader();
 
-                while (dr.Read()) {
+                while (dr.Read()) { 
                     invoiceID = dr.GetInt32("MAX(LaskuID)");
                 }
                 conn.Close();
             }
 
+            // lisätään laskurivit tietokantaan
             using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
                 conn.Open();
-                // lisätään laskun asiakas tietokantaan
-                MySqlCommand cmd3 = new MySqlCommand("INSERT INTO laskujenasiakkaat(LaskuID,Nimi,Katuosoite,Postinumero,Kaupunki) VALUES(@id, @name, @streetAddress, @postalCode, @city);", conn);
-                cmd3.Parameters.AddWithValue("@id", invoiceID);
-                cmd3.Parameters.AddWithValue("@name", invoice.CustomerAddress.Name);
-                cmd3.Parameters.AddWithValue("@streetAddress", invoice.CustomerAddress.StreetAddress);
-                cmd3.Parameters.AddWithValue("@postalCode", invoice.CustomerAddress.PostalCode);
-                cmd3.Parameters.AddWithValue("@city", invoice.CustomerAddress.City);
-                cmd3.ExecuteNonQuery();
-
-                // lisätään laskurivit tietokantaan
                 foreach (var line in invoice.Lines) {
-                    MySqlCommand cmd4 = new MySqlCommand("INSERT INTO laskurivit(LaskuID, Tuotenimi, TuotteidenMaara, Yksikko, Yksikkohinta) VALUES(@invoiceID, @productName, @quantity, @unit, @pricePerUnit);", conn);
-                    cmd4.Parameters.AddWithValue("@invoiceID", invoiceID);
-                    cmd4.Parameters.AddWithValue("@productName", line.Product.Name);
-                    cmd4.Parameters.AddWithValue("@quantity", line.Quantity);
-                    cmd4.Parameters.AddWithValue("@unit", line.Product.Unit);
-                    cmd4.Parameters.AddWithValue("@pricePerUnit", line.Product.PricePerUnit);
-                    cmd4.ExecuteNonQuery();
+                    MySqlCommand cmd3 = new MySqlCommand("INSERT INTO laskurivit(LaskuID, Tuotenimi, TuotteidenMaara, Yksikko, Yksikkohinta) VALUES(@invoiceID, @productName, @quantity, @unit, @pricePerUnit);", conn);
+                    cmd3.Parameters.AddWithValue("@invoiceID", invoiceID);
+                    cmd3.Parameters.AddWithValue("@productName", line.Product.Name);
+                    cmd3.Parameters.AddWithValue("@quantity", line.Quantity);
+                    cmd3.Parameters.AddWithValue("@unit", line.Product.Unit);
+                    cmd3.Parameters.AddWithValue("@pricePerUnit", line.Product.PricePerUnit);
+                    cmd3.ExecuteNonQuery();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Lisää laskurivin tietokantaan.
+        /// </summary>
+        /// <param name="line">Lisättävä laskurivi.</param>
+        /// <param name="invoiceID">Laskun ID mille laskurivi kuuluu.</param>
+        public static void InsertInvoiceLine(InvoiceLine line, int invoiceID) {
+            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO laskurivit(LaskuID, Tuotenimi, TuotteidenMaara, Yksikko, Yksikkohinta) VALUES(@invoiceID, @productName, @quantity, @unit, @pricePerUnit);", conn);
+                cmd.Parameters.AddWithValue("@invoiceID", invoiceID);
+                cmd.Parameters.AddWithValue("@productName", line.Product.Name);
+                cmd.Parameters.AddWithValue("@quantity", line.Quantity);
+                cmd.Parameters.AddWithValue("@unit", line.Product.Unit);
+                cmd.Parameters.AddWithValue("@pricePerUnit", line.Product.PricePerUnit);
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -87,20 +102,18 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 conn.Open();
 
                 // päivitetään laskun tiedot, laskun päiväys ei kuitenkaan muutu koska se on automaattinen
-                MySqlCommand cmd1 = new MySqlCommand("UPDATE laskut SET Erapaiva=@duedate, Lisatiedot=@details WHERE LaskuID=@id;", conn);
+                MySqlCommand cmd1 = new MySqlCommand("UPDATE laskut SET Erapaiva=@duedate, Lisatiedot=@details " +
+                    "AsiakasNimi=@cName, AsiakasKatuosoite=@cStreetAddr, AsiakasPostinumero=@cPostalCode, AsiakasKaupunki=@cCity " +
+                    "WHERE LaskuID=@id;", conn);
+
+                cmd1.Parameters.AddWithValue("@id", invoice.ID);
                 cmd1.Parameters.AddWithValue("@duedate", invoice.DueDate);
                 cmd1.Parameters.AddWithValue("@details", invoice.Details);
-                cmd1.Parameters.AddWithValue("@id", invoice.ID);
+                cmd1.Parameters.AddWithValue("@cName", invoice.CustomerAddress.Name);
+                cmd1.Parameters.AddWithValue("@cStreetAddr", invoice.CustomerAddress.StreetAddress);
+                cmd1.Parameters.AddWithValue("@cPostalCode", invoice.CustomerAddress.PostalCode);
+                cmd1.Parameters.AddWithValue("@cCity", invoice.CustomerAddress.City);
                 cmd1.ExecuteNonQuery();
-
-                // päivitetään laskun asiakkaan osoitetiedot
-                MySqlCommand cmd2 = new MySqlCommand("UPDATE laskujenasiakkaat SET Nimi=@name, Katuosoite=@streetAddress, Postinumero=@postalCode, Kaupunki=@city WHERE LaskuID=@id;", conn);
-                cmd2.Parameters.AddWithValue("@name", invoice.CustomerAddress.Name);
-                cmd2.Parameters.AddWithValue("@streetAddress", invoice.CustomerAddress.StreetAddress);
-                cmd2.Parameters.AddWithValue("@postalCode", invoice.CustomerAddress.PostalCode);
-                cmd2.Parameters.AddWithValue("@city", invoice.CustomerAddress.City);
-                cmd2.Parameters.AddWithValue("@id", invoice.ID);
-                cmd2.ExecuteNonQuery();
 
                 // päivitetään laskurivin tiedot
                 foreach (var line in invoice.Lines) {
@@ -122,10 +135,6 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public static void DeleteInvoice(int id) {
             using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
                 conn.Open();
-
-                MySqlCommand cmd1 = new MySqlCommand("DELETE FROM laskujenasiakkaat WHERE LaskuID=@id;", conn);
-                cmd1.Parameters.AddWithValue("@id", id);
-                cmd1.ExecuteNonQuery();
 
                 MySqlCommand cmd2 = new MySqlCommand("DELETE FROM laskurivit WHERE LaskuID=@id;", conn);
                 cmd2.Parameters.AddWithValue("@id", id);
@@ -178,7 +187,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                         details = "-";
                     }
 
-                    var address = GetInvoiceCustomer(invoiceId);
+                    string cName = dr.GetString("AsiakasNimi");
+                    string cStreetAddress = dr.GetString("AsiakasKatuosoite");
+                    string cPostalCode = dr.GetString("AsiakasPostinumero");
+                    string cCity = dr.GetString("AsiakasKaupunki");
+
+                    var address = new Address(cName, cStreetAddress, cPostalCode, cCity);
 
                     // luodaan itse lasku
                     Invoice invoice = new Invoice(address, date, duedate, invoiceId, details);
@@ -190,27 +204,6 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
 
             return invoices;
-        }
-
-        private static Address GetInvoiceCustomer(int invoiceId) {
-            Address address = null;
-            using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
-                conn.Open();
-                // haetaan laskun asiakkaan osoite
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM laskujenasiakkaat WHERE LaskuID = @id;", conn);
-                cmd.Parameters.AddWithValue("@id", invoiceId);
-                var dr = cmd.ExecuteReader();
-
-                while (dr.Read()) {
-                    string name = dr.GetString("Nimi");
-                    string streetAddress = dr.GetString("Katuosoite");
-                    string postalCode = dr.GetString("Postinumero");
-                    string city = dr.GetString("Kaupunki");
-
-                    address = new Address(name, streetAddress, postalCode, city);
-                }
-            }
-            return address;
         }
 
         private static void GetInvoiceLines(Invoice invoice) {

@@ -19,6 +19,10 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
     /// </summary>
     public partial class ViewInvoiceWindow : Window
     {
+        private bool unsavedChanges = false;
+        private List<int> linesToDelete = new List<int>();
+        private List<InvoiceLine> linesToAdd = new List<InvoiceLine>();
+
         /// <summary>
         /// Luo uuden ikkunan laskun tarkastelemista varten.
         /// </summary>
@@ -28,7 +32,56 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
             InitializeComponent();
 
             dataGridLines.ItemsSource = invoice.Lines;
+            dueDatePicker.SelectedDate = invoice.DueDate.ToDateTime(new TimeOnly());
             this.DataContext = invoice;
+        }
+
+        private void Remove_Line_Clicked(object sender, RoutedEventArgs e) {
+            var obj = sender as FrameworkElement;
+            var invoiceLine = obj.DataContext as InvoiceLine;
+
+            var result = MessageBox.Show($"Haluatko varmasti poistaa laskurivin \"{invoiceLine.Product.Name}\"?", "Poista laskurivi",MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) {
+                Invoice invoice = this.DataContext as Invoice;
+                invoice.Lines.Remove(invoiceLine);
+                linesToDelete.Add(invoiceLine.ID);
+                unsavedChanges = true;
+            }
+        }
+
+        private void Save_Btn_Clicked(object sender, RoutedEventArgs e) {
+            SaveChanges();
+        }
+
+
+        private void Save_MenuItem_Click(object sender, RoutedEventArgs e) {
+            SaveChanges();
+        }
+
+        private void SaveChanges() {
+            Invoice invoice = this.DataContext as Invoice;
+
+            foreach (var line in linesToDelete) {
+                DataRepository.DeleteInvoiceLine(line);
+            }
+
+            foreach (var line in linesToAdd) {
+                DataRepository.InsertInvoiceLine(line, invoice.ID);
+            }
+
+            MessageBox.Show("Tiedot on tallennettu tietokantaan.", "Viesti");
+        }
+
+        private void DeleteInvoice_MenuItem_Click(object sender, RoutedEventArgs e) {
+            Invoice invoice = this.DataContext as Invoice;
+            var result = MessageBox.Show($"Haluatko varmasti poistaa laskun {invoice.ID}?", "Poista lasku", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) {
+                DataRepository.DeleteInvoice(invoice.ID);
+                MessageBox.Show("Lasku on poistettu tietokannasta.", "Viesti");
+                this.Close();
+            }
         }
     }
 }

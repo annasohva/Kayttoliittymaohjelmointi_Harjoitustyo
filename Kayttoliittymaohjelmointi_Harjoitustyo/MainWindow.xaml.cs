@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,10 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             InitializeComponent();
             DataRepository.CreateDb();
 
+            FetchInvoices();
+        }
+
+        private void FetchInvoices() {
             var invoices = DataRepository.GetInvoices();
             this.DataContext = invoices;
         }
@@ -33,6 +38,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
             var invoiceWindow = new ViewInvoiceWindow(invoice);
             invoiceWindow.ShowDialog();
+            FetchInvoices();
         }
     }
 }

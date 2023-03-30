@@ -23,24 +23,17 @@ CREATE TABLE Asiakkaat
   PRIMARY KEY (AsiakasID)
 );
 
-CREATE TABLE Laskut
+CREATE TABLE laskut -- asiakkaat voi muuttua tai poistua niin laskujen asiakastiedoista tallennetaan kopio laskut tauluun
 (
   LaskuID INT(20) NOT NULL AUTO_INCREMENT,
   Paivays DATE NOT NULL,
   Erapaiva DATE NOT NULL,
   Lisatiedot VARCHAR(200) NULL,
+  AsiakasNimi VARCHAR(100) NOT NULL,
+  AsiakasKatuosoite VARCHAR(100) NOT NULL,
+  AsiakasPostinumero VARCHAR(10) NOT NULL,
+  AsiakasKaupunki VARCHAR(50) NOT NULL,
   PRIMARY KEY (LaskuID)
-);
-
-CREATE TABLE LaskujenAsiakkaat -- asiakkaat voi muuttua tai poistua niin laskujen asiakastiedot tallennetaan
-(
-  LaskuID INT(20) NOT NULL,
-  Nimi VARCHAR(100) NOT NULL,
-  Katuosoite VARCHAR(100) NOT NULL,
-  Postinumero VARCHAR(10) NOT NULL,
-  Kaupunki VARCHAR(50) NOT NULL,
-  PRIMARY KEY (LaskuID),
-  FOREIGN KEY (LaskuID) REFERENCES Laskut(LaskuID)
 );
 
 CREATE TABLE Laskurivit -- tuotteet voi muuttua tai poistua niin samat tiedot tallennetaan joka laskuriville mitä tuotteet taulussa
@@ -71,21 +64,13 @@ INSERT INTO asiakkaat(Nimi,Katuosoite,Postinumero,Kaupunki)
 	('Erkki Esimerkki','Esimerkkitie 2','80100','Joensuu'),
 	('Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu');
 		
-INSERT INTO laskut(Erapaiva,Lisatiedot,Paivays)
-	VALUES("2023-03-29",'Lattiaremontti',"2023-02-27"),
-	("2023-03-30",'Seinien maalaus',"2023-02-28"),
-	("2023-04-04",'Keittioremontti, kaappien ovien vaihto',"2023-03-05"),
-	("2023-04-07",'Lattiaremontti',"2023-03-08"),
-	("2023-04-09",'Seinien maalaus',"2023-03-10"),
-	("2023-04-16",NULL,"2023-03-17");
-
-INSERT INTO laskujenasiakkaat(LaskuID,Nimi,Katuosoite,Postinumero,Kaupunki)
-	VALUES(1,'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
-	(2,'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
-	(3,'Erkki Esimerkki','Esimerkkitie 2','80100','Joensuu'),
-	(4,'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
-	(5,'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
-	(6,'Yritys Oy','Esimerkkitie 1','80100','Joensuu');
+INSERT INTO laskut(Erapaiva,Lisatiedot,Paivays,AsiakasNimi,AsiakasKatuosoite,AsiakasPostinumero,AsiakasKaupunki)
+	VALUES("2023-03-29",'Lattiaremontti',"2023-02-27",'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
+	("2023-03-30",'Seinien maalaus',"2023-02-28",'Yritys Oy','Esimerkkitie 1','80100','Joensuu'),
+	("2023-04-04",'Keittioremontti, kaappien ovien vaihto',"2023-03-05",'Erkki Esimerkki','Esimerkkitie 2','80100','Joensuu'),
+	("2023-04-07",'Lattiaremontti',"2023-03-08",'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
+	("2023-04-09",'Seinien maalaus',"2023-03-10",'Osakeyhtio Oy','Esimerkkitie 3','80100','Joensuu'),
+	("2023-04-16",NULL,"2023-03-17",'Yritys Oy','Esimerkkitie 1','80100','Joensuu');
 
 INSERT INTO laskurivit(LaskuID,Tuotenimi,TuotteidenMaara,Yksikko,Yksikkohinta)
 	VALUES(1,'Tyo',10,'t',60),
