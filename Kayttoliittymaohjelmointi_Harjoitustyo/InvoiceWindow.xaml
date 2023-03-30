@@ -79,12 +79,14 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-            <Label Content="Kokonaishinta:"/>
-            <Label Content="{Binding RoundedTotal}"/>
-            <Label Content="€"/>
-        </StackPanel>
-        <Button Height="20" Width="80" Content="Tallenna" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+        <Grid>
+            <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Label Content="Kokonaishinta:"/>
+                <Label Content="{Binding RoundedTotal}"/>
+                <Label Content="€"/>
+            </StackPanel>
+        </Grid>
+        <Button Height="25" Width="80" Content="Tallenna" HorizontalAlignment="Right" Margin="0,10,10,0"/>
     </StackPanel>
 </Window>
