@@ -95,8 +95,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
         private void AddLine_Clicked(object sender, RoutedEventArgs e) {
             Invoice invoice = this.DataContext as Invoice;
+
             var newLineWindow = new NewLineWindow(invoice);
             newLineWindow.ShowDialog();
+
+            linesToAdd.Add(invoice.Lines.Last());
+            unsavedChanges = true;
         }
     }
 }

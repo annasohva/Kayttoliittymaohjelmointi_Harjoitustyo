@@ -69,7 +69,7 @@
         </GroupBox>
 
         <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10">
-            <DataGrid.Columns>
+            <DataGrid.Columns >
                 <DataGridTextColumn Width="20*" Header="Tuote" Binding="{Binding Product.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="20*" Header="Määrä" Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Width="20*" Header="Yksikkö" Binding="{Binding Product.Unit}" IsReadOnly="True"/>
@@ -88,7 +88,7 @@
             <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0" Click="AddLine_Clicked" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <Label Content="Kokonaishinta:"/>
-                <Label Content="{Binding RoundedTotal}"/>
+                <Label x:Name="lblTotal" Content="{Binding Total}"/>
                 <Label Content="€"/>
             </StackPanel>
         </Grid>

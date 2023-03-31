@@ -2,26 +2,36 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskun tietoja ja rivejä varten.
     /// </summary>
-    public class Invoice {
+    public class Invoice : INotifyPropertyChanged {
         public readonly ObservableCollection<InvoiceLine> Lines = new ObservableCollection<InvoiceLine>();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public int ID { get; private set; } = -1;
         public DateOnly Date { get; private set; }
         public DateOnly DueDate { get; set; }
         public Address BillerAddress { get; private set; }
         public Address CustomerAddress { get; private set; }
         public string Details { get; set; } = string.Empty;
-        public double RoundedTotal {
+        public double Total {
             get {
+                double total = 0;
+
+                foreach (var line in Lines) {
+                    total += line.Total;
+                }
+
                 return Math.Round(total,2);
             }
         }
-        private double total = -1;
-
+        
         /// <summary>
         /// Luo uuden laskun ilman työn määrää ja hintaa.
         /// </summary>
@@ -39,6 +49,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             BillerAddress = Biller.Address;
 
             Details = details;
+
+            Lines.CollectionChanged += Lines_CollectionChanged;
         }
 
         /// <summary>
@@ -54,30 +66,29 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, DateOnly date, DateOnly duedate, int id = -1, string details = "") : this(customerAddress, date, duedate, id, details) {
             Product work = new Product("Työ", "t", workPricePerHour);
             var line = new InvoiceLine(work, workQuantity);
-            AddLine(line);
-        }
-
-        /// <summary>
-        /// Lisää laskuun uuden laskurivin ja päivittää laskun kokonaissumman.
-        /// </summary>
-        /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
-        public void AddLine(InvoiceLine line) {
-            if (total == -1) {
-                total = 0;
-            }
             Lines.Add(line);
-            this.total += line.Total;
         }
 
-        /// <summary>
-        /// Päivittää laskurivin kokonaissumman.
-        /// </summary>
-        public void UpdateTotal() {
-            total = 0;
+        // seuraavat metodit on sovellettu stackoverflowsta, ja auttavat laskun kokonaissumman päivityksessä
+        private void OnPropertyChanged(string callerName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+        }
 
-            foreach (var line in Lines) {
-                this.total += line.Total;
+        private void Lines_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            OnPropertyChanged("Total");
+
+            if (e.OldItems != null) {
+                foreach (INotifyPropertyChanged line in e.OldItems)
+                    line.PropertyChanged -= Line_PropertyChanged;
             }
+            if (e.NewItems != null) {
+                foreach (INotifyPropertyChanged line in e.NewItems)
+                    line.PropertyChanged += Line_PropertyChanged;
+            }
+        }
+
+        private void Line_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            OnPropertyChanged("Total");
         }
     }
 }

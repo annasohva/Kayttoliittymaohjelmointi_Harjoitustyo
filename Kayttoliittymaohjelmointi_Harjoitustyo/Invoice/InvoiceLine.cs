@@ -17,7 +17,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
             set {
                 product = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Product"));
+                OnPropertyChanged("Product");
             }
         }
         public double Quantity {
@@ -26,7 +26,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
             set {
                 quantity = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Quantity"));
+                OnPropertyChanged("Quantity");
+                UpdateTotal();
             }
         }
         public double Total {
@@ -35,7 +36,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
             private set {
                 total = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Total"));
+                OnPropertyChanged("Total");
             }
         }
         public double RoundedTotal {
@@ -44,7 +45,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
             private set {
                 roundedTotal = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RoundedTotal"));
+                OnPropertyChanged("RoundedTotal");
             }
         }
 
@@ -60,6 +61,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             Product = product;
             Quantity = quantity;
             UpdateTotal();
+
+            Product.PropertyChanged += Product_PropertyChanged;
         }
 
         /// <summary>
@@ -68,6 +71,14 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public void UpdateTotal() {
             Total = Product.PricePerUnit * Quantity;
             RoundedTotal = Math.Round(Total, 2);
+        }
+
+        private void OnPropertyChanged(string callerName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+        }
+
+        private void Product_PropertyChanged(object? sender, PropertyChangedEventArgs e) {
+            UpdateTotal();
         }
     }
 }

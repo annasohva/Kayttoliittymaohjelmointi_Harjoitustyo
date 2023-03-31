@@ -223,7 +223,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                     double pricePerUnit = dr.GetDouble("Yksikkohinta");
 
                     Product product = new Product(productName, unit, pricePerUnit);
-                    invoice.AddLine(new InvoiceLine(product, quantity, lineId));
+                    invoice.Lines.Add(new InvoiceLine(product, quantity, lineId));
                 }
             }
         }
