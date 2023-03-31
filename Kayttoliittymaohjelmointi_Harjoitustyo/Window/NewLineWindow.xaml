@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Uusi laskurivi" Height="200" Width="500" ResizeMode="NoResize">
     <Grid>
+        <!--Menusta voidaan hallita tuotteita ja lukea käyttöohje-->
         <Menu Height="20" VerticalAlignment="Top">
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Tuotekatalogi..."/>
@@ -15,35 +16,41 @@
                 <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
+            <!--Tuotteen valinta combobox-->
             <StackPanel Margin="5">
                 <Label Content="Tuote:"/>
                 <ComboBox x:Name="comProducts" SelectionChanged="ComProducts_SelectionChanged"/>
             </StackPanel>
 
+            <!--Määrä textbox-->
             <StackPanel Margin="5">
                 <Label Content="Määrä:"/>
                 <TextBox x:Name="txtQuantity" Height="22" TextChanged="TxtQuantity_TextChanged"/>
             </StackPanel>
 
+            <!--Yksikkö label-->
             <StackPanel Margin="5">
                 <Label Content="Yksikkö:"/>
                 <Label Content="{Binding Product.Unit}"/>
             </StackPanel>
 
+            <!--A-hinta label-->
             <StackPanel Margin="5">
                 <Label Content="A-hinta:"/>
                 <Label Content="{Binding Product.PricePerUnit}"/>
             </StackPanel>
 
+            <!--Yhteensä label-->
             <StackPanel Margin="5">
                 <Label Content="Yhteensä:"/>
                 <Label Content="{Binding RoundedTotal}"/>
             </StackPanel>
-
         </StackPanel>
 
+        <!--Lisää laskurivi ja peru -napit-->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Content="Lisää laskurivi" Width="80" Height="25" Margin="10,10,5,20" Click="AddLine_Clicked" />
             <Button Content="Peru" Width="80" Height="25" Margin="5,10,20,20" Click="Cancel_Click" />

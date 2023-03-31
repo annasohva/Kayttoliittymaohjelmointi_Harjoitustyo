@@ -20,6 +20,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         private bool unsavedChanges = false;
         private List<int> linesToDelete = new List<int>();
         private List<InvoiceLine> linesToAdd = new List<InvoiceLine>();
+        private int initialised = 0; // kun tämä on 1 lasketaan tallentamattomia muutoksia tekstikentistä
 
         /// <summary>
         /// Luo uuden ikkunan laskun tarkastelemista varten.
@@ -33,7 +34,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             this.DataContext = invoice;
         }
 
-        private void Remove_Line_Clicked(object sender, RoutedEventArgs e) {
+        private void RemoveLine_Clicked(object sender, RoutedEventArgs e) { // kun laskurivin poisto -nappia painetaan
             var obj = sender as FrameworkElement;
             var invoiceLine = obj.DataContext as InvoiceLine;
 
@@ -50,15 +51,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void Save_Btn_Clicked(object sender, RoutedEventArgs e) {
-            SaveChanges();
-        }
-
-        private void Save_MenuItem_Click(object sender, RoutedEventArgs e) {
-            SaveChanges();
-        }
-
-        private void SaveChanges() {
+        private void Save_Btn_Clicked(object sender, RoutedEventArgs e) { // kun tallenna-nappia painetaan tallennetaan muutokset
             Invoice invoice = this.DataContext as Invoice;
 
             foreach (var line in linesToDelete) {
@@ -72,9 +65,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             DataRepository.UpdateInvoice(invoice);
 
             MessageBox.Show("Tiedot on tallennettu tietokantaan.", "Viesti");
+
+            unsavedChanges = false;
         }
 
-        private void DeleteInvoice_MenuItem_Click(object sender, RoutedEventArgs e) {
+        private void DeleteInvoice_MenuItem_Click(object sender, RoutedEventArgs e) { // kun menusta valitaan laskun poisto
             Invoice invoice = this.DataContext as Invoice;
             var result = MessageBox.Show($"Haluatko varmasti poistaa laskun {invoice.ID}?", "Poista lasku", MessageBoxButton.YesNo);
 
@@ -85,15 +80,17 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void DueDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
+        // datepicker hyväksyy minulla vain datetimen niin dateonly täytyy muuntaa
+        private void DueDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) { 
             Invoice invoice = this.DataContext as Invoice;
 
             if (dueDatePicker.SelectedDate != null && invoice != null) {
                 invoice.DueDate = DateOnly.FromDateTime((DateTime)dueDatePicker.SelectedDate);
+                unsavedChanges = true;
             }
         }
 
-        private void AddLine_Clicked(object sender, RoutedEventArgs e) {
+        private void AddLine_Clicked(object sender, RoutedEventArgs e) { // kun lisää laskurivi-nappia painetaan
             Invoice invoice = this.DataContext as Invoice;
 
             var newLineWindow = new NewLineWindow(invoice);
@@ -101,6 +98,31 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
             linesToAdd.Add(invoice.Lines.Last());
             unsavedChanges = true;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) { // kun ikkunaa yritetään sulkea
+            if (unsavedChanges == true) {
+                var result = MessageBox.Show($"Sinulla on tallentamattomia muutoksia. Haluatko varmasti sulkea ikkunan?", "Huomio", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.No) {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e) { // kun tekstilaatikoissa muutetaan tekstiä
+            if (initialised == 1) {
+                TextBox textBox = (TextBox)e.Source;
+
+                if (textBox.Text != null && textBox.Text != string.Empty) {
+                    unsavedChanges = true;
+                }
+            }
+        }
+
+        // kun tallenna-nappi mikä on xaml tiedoston perällä on latautunut voidaan alkaa laskemaan onko tallentamattomia muutoksia
+        private void SaveButton_Loaded(object sender, RoutedEventArgs e) { 
+            initialised = 1;
         }
     }
 }

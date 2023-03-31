@@ -73,6 +73,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             RoundedTotal = Math.Round(Total, 2);
         }
 
+        // kokonaissumman päivittymiseen liittyviä metodeita
+
         private void OnPropertyChanged(string callerName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }

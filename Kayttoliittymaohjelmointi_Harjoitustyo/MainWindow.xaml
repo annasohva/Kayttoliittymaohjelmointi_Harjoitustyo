@@ -12,10 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.Resources>
-            
-        </Grid.Resources>
-        
+        <!--Menu jossa on uuden laskun luonti, tuotteiden ja osoitetietojen hallinta sekä käyttöohje-->
         <Menu>
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Uusi lasku..."/>
@@ -27,6 +24,8 @@
                 <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
+        
+        <!--DataGrid näyttää listan laskuista-->
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ID}"/>
@@ -36,6 +35,7 @@
                 <DataGridTextColumn Header="Lisätiedot" IsReadOnly="True" Binding="{Binding Details}"/>
                 <DataGridTextColumn Header="Kokonaishinta (€)" IsReadOnly="True" Binding="{Binding Total}"/>
 
+                <!--Jokaisella laskulla on oma nappi millä voi avata laskun-->
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

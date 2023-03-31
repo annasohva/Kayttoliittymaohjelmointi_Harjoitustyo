@@ -13,12 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+// päätin tehdä laskurivin lisäykseen oman ikkunan, koska tuotteiden hallinta on erillään laskurivien tuotteista
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Interaction logic for NewLineWindow.xaml
     /// </summary>
-    public partial class NewLineWindow : Window {
+    public partial class NewLineWindow : Window { 
         private Invoice invoiceRef;
+        /// <summary>
+        /// Uuden laskurivin luonti -ikkuna.
+        /// </summary>
+        /// <param name="invoice">Lasku johon laskurivi lisätään.</param>
         public NewLineWindow(Invoice invoice) {
             InitializeComponent();
 
@@ -33,7 +38,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             this.DataContext = new InvoiceLine((Product)comProducts.SelectedItem, 0);
         }
 
-        private void ComProducts_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void ComProducts_SelectionChanged(object sender, SelectionChangedEventArgs e) { // kun tuote-comboboxista valitaan eri tuote
             var line = (InvoiceLine)this.DataContext;
 
             if (line != null) {
@@ -42,7 +47,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void TxtQuantity_TextChanged(object sender, TextChangedEventArgs e) {
+        private void TxtQuantity_TextChanged(object sender, TextChangedEventArgs e) { // kun tuotteiden määrää muutetaan
             var line = (InvoiceLine)this.DataContext;
 
             if (double.TryParse(txtQuantity.Text, out double quantity)) {
@@ -55,13 +60,13 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void AddLine_Clicked(object sender, RoutedEventArgs e) {
+        private void AddLine_Clicked(object sender, RoutedEventArgs e) { // kun painetaan lisää laskurivi -nappia
             var line = (InvoiceLine)this.DataContext;
             invoiceRef.Lines.Add(line);
             Close();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e) {
+        private void Cancel_Click(object sender, RoutedEventArgs e) { // kun painetaan peru -nappia
             Close();
         }
     }

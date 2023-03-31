@@ -19,6 +19,9 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        /// <summary>
+        /// Laskutussovelluksen pääikkuna.
+        /// </summary>
         public MainWindow() {
             InitializeComponent();
             DataRepository.CreateDb();
@@ -26,19 +29,20 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             FetchInvoices();
         }
 
-        private void FetchInvoices() {
+        private void FetchInvoices() { // hakee laskut tietokannasta ja asettaa ne datacontextiin
             var invoices = DataRepository.GetInvoices();
             this.DataContext = invoices;
         }
 
         private void View_Invoice_Clicked(object sender, RoutedEventArgs e) {
-            // löysin stackoverflowista ratkaisun miten saa senderistä datacontextin, kun löysin sen debuggerissa senderin ominaisuutena
+            // löysin stackoverflowista ratkaisun miten saa senderistä datacontextin
             var obj = sender as FrameworkElement; 
             var invoice = obj.DataContext as Invoice;
 
             var invoiceWindow = new ViewInvoiceWindow(invoice);
             invoiceWindow.ShowDialog();
-            FetchInvoices();
+
+            FetchInvoices(); // päivitetään datacontexti, että käyttäjä näkee esim. laskun poistuneen
         }
     }
 }
