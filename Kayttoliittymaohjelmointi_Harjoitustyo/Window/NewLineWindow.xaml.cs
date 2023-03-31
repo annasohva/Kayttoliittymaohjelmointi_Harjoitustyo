@@ -18,8 +18,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// Interaction logic for NewLineWindow.xaml
     /// </summary>
     public partial class NewLineWindow : Window {
+        private Invoice invoiceRef;
         public NewLineWindow(Invoice invoice) {
             InitializeComponent();
+
+            invoiceRef = invoice;
+
             var products = DataRepository.GetProducts();
 
             comProducts.ItemsSource = products;
@@ -29,7 +33,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             this.DataContext = new InvoiceLine((Product)comProducts.SelectedItem, 0);
         }
 
-        private void comProducts_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void ComProducts_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var line = (InvoiceLine)this.DataContext;
 
             if (line != null) {
@@ -38,7 +42,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void txtQuantity_TextChanged(object sender, TextChangedEventArgs e) {
+        private void TxtQuantity_TextChanged(object sender, TextChangedEventArgs e) {
             var line = (InvoiceLine)this.DataContext;
 
             if (double.TryParse(txtQuantity.Text, out double quantity)) {
@@ -49,6 +53,16 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 line.Quantity = 0;
                 line.UpdateTotal();
             }
+        }
+
+        private void AddLine_Clicked(object sender, RoutedEventArgs e) {
+            var line = (InvoiceLine)this.DataContext;
+            invoiceRef.Lines.Add(line);
+            Close();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e) {
+            Close();
         }
     }
 }

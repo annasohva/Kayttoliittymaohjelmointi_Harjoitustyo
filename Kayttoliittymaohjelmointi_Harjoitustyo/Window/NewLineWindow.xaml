@@ -17,27 +17,27 @@
         </Menu>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <StackPanel>
+            <StackPanel Margin="5">
                 <Label Content="Tuote:"/>
-                <ComboBox x:Name="comProducts" SelectionChanged="comProducts_SelectionChanged"/>
+                <ComboBox x:Name="comProducts" SelectionChanged="ComProducts_SelectionChanged"/>
             </StackPanel>
 
-            <StackPanel>
+            <StackPanel Margin="5">
                 <Label Content="Määrä:"/>
-                <TextBox x:Name="txtQuantity" Height="22" TextChanged="txtQuantity_TextChanged"/>
+                <TextBox x:Name="txtQuantity" Height="22" TextChanged="TxtQuantity_TextChanged"/>
             </StackPanel>
 
-            <StackPanel>
+            <StackPanel Margin="5">
                 <Label Content="Yksikkö:"/>
                 <Label Content="{Binding Product.Unit}"/>
             </StackPanel>
 
-            <StackPanel>
+            <StackPanel Margin="5">
                 <Label Content="A-hinta:"/>
                 <Label Content="{Binding Product.PricePerUnit}"/>
             </StackPanel>
 
-            <StackPanel>
+            <StackPanel Margin="5">
                 <Label Content="Yhteensä:"/>
                 <Label Content="{Binding RoundedTotal}"/>
             </StackPanel>
@@ -45,8 +45,8 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Content="Lisää laskurivi" Width="75" Height="25" Margin="10,10,5,20"/>
-            <Button Content="Peru" Width="75" Height="25" Margin="5,10,20,20"/>
+            <Button Content="Lisää laskurivi" Width="80" Height="25" Margin="10,10,5,20" Click="AddLine_Clicked" />
+            <Button Content="Peru" Width="80" Height="25" Margin="5,10,20,20" Click="Cancel_Click" />
         </StackPanel>
     </Grid>
 </Window>

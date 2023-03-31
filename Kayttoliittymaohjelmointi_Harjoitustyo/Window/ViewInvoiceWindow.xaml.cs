@@ -12,13 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Kayttoliittymaohjelmointi_Harjoitustyo
-{
+namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Interaction logic for ViewInvoiceWindow.xaml
     /// </summary>
-    public partial class ViewInvoiceWindow : Window
-    {
+    public partial class ViewInvoiceWindow : Window {
         private bool unsavedChanges = false;
         private List<int> linesToDelete = new List<int>();
         private List<InvoiceLine> linesToAdd = new List<InvoiceLine>();
@@ -27,8 +25,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
         /// Luo uuden ikkunan laskun tarkastelemista varten.
         /// </summary>
         /// <param name="invoice">Lasku jota tarkastellaan.</param>
-        public ViewInvoiceWindow(Invoice invoice)
-        {
+        public ViewInvoiceWindow(Invoice invoice) {
             InitializeComponent();
 
             dataGridLines.ItemsSource = invoice.Lines;
@@ -40,20 +37,22 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
             var obj = sender as FrameworkElement;
             var invoiceLine = obj.DataContext as InvoiceLine;
 
-            var result = MessageBox.Show($"Haluatko varmasti poistaa laskurivin \"{invoiceLine.Product.Name}\"?", "Poista laskurivi",MessageBoxButton.YesNo);
+            var result = MessageBox.Show($"Haluatko varmasti poistaa laskurivin \"{invoiceLine.Product.Name}\"?", "Poista laskurivi", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) {
                 Invoice invoice = this.DataContext as Invoice;
                 invoice.Lines.Remove(invoiceLine);
-                linesToDelete.Add(invoiceLine.ID);
-                unsavedChanges = true;
+
+                if (invoiceLine.ID != -1) {
+                    linesToDelete.Add(invoiceLine.ID);
+                    unsavedChanges = true;
+                }
             }
         }
 
         private void Save_Btn_Clicked(object sender, RoutedEventArgs e) {
             SaveChanges();
         }
-
 
         private void Save_MenuItem_Click(object sender, RoutedEventArgs e) {
             SaveChanges();
@@ -86,7 +85,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo
             }
         }
 
-        private void dueDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
+        private void DueDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
             Invoice invoice = this.DataContext as Invoice;
 
             if (dueDatePicker.SelectedDate != null && invoice != null) {

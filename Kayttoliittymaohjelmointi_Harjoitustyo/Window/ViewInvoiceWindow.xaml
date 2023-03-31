@@ -50,7 +50,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Eräpäivä:"/>
-                    <DatePicker x:Name="dueDatePicker" SelectedDateChanged="dueDatePicker_SelectedDateChanged" />
+                    <DatePicker x:Name="dueDatePicker" SelectedDateChanged="DueDatePicker_SelectedDateChanged" />
                 </StackPanel>
             </StackPanel>
             <GroupBox Header="Asiakas" Grid.Row="1">
