@@ -1,15 +1,54 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskuriviä varten.
     /// </summary>
-    public class InvoiceLine {
+    public class InvoiceLine : INotifyPropertyChanged {
+        private Product product;
+        private double quantity;
+        private double roundedTotal;
+        private double total;
         public int ID { get; private set; } = -1;
-        public Product Product { get; set; }
-        public double Quantity { get; set; }
-        public double Total { get; private set; }
-        public double RoundedTotal { get; private set; }
+        public Product Product {
+            get {
+                return product;
+            }
+            set {
+                product = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Product"));
+            }
+        }
+        public double Quantity {
+            get {
+                return quantity;
+            }
+            set {
+                quantity = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Quantity"));
+            }
+        }
+        public double Total {
+            get {
+                return total;
+            }
+            private set {
+                total = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Total"));
+            }
+        }
+        public double RoundedTotal {
+            get {
+                return roundedTotal;
+            }
+            private set {
+                roundedTotal = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RoundedTotal"));
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Luo uuden laskurivin.

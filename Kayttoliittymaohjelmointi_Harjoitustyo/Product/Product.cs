@@ -1,19 +1,45 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka laskutettavaa tuotetta varten.
     /// </summary>
-    public class Product {
-        public int ID { get; set; } = -1;
-        public string Name { get; set; } = string.Empty;
-        public string Unit { get; set; } = string.Empty;
-        public double PricePerUnit { get; set; }
+    public class Product : INotifyPropertyChanged {
+        private string name = string.Empty;
+        private string unit = string.Empty;
+        private double pricePerUnit;
 
-        /// <summary>
-        /// Luo uuden tuote-olion.
-        /// </summary>
-        public Product() { }
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public int ID { get; set; } = -1;
+        public string Name {
+            get {
+                return name;
+            }
+            set {
+                name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+            }
+        }
+        public string Unit {
+            get {
+                return unit;
+            }
+            set {
+                unit = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Unit"));
+            }
+        }
+        public double PricePerUnit {
+            get {
+                return pricePerUnit;
+            }
+            set {
+                pricePerUnit = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PricePerUnit"));
+            }
+        }
 
         /// <summary>
         /// Luo uuden tuote-olion.

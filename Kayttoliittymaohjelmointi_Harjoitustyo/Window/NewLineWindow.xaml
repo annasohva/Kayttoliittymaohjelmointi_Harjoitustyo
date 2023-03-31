@@ -5,39 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
         mc:Ignorable="d"
-        Title="Uusi laskurivi" Height="200" Width="500">
+        Title="Uusi laskurivi" Height="200" Width="500" ResizeMode="NoResize">
     <Grid>
-
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Header="Hallinta">
+                <MenuItem Header="Tuotekatalogi..."/>
+            </MenuItem>
+            <MenuItem Header="Ohje">
+                <MenuItem Header="Käyttöohje..."/>
+            </MenuItem>
+        </Menu>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            
+
             <StackPanel>
                 <Label Content="Tuote:"/>
-                <ComboBox x:Name="comProducts">
-
-                </ComboBox>
+                <ComboBox x:Name="comProducts" SelectionChanged="comProducts_SelectionChanged"/>
             </StackPanel>
-            
+
             <StackPanel>
                 <Label Content="Määrä:"/>
-                <TextBox/>
+                <TextBox x:Name="txtQuantity" Height="22" TextChanged="txtQuantity_TextChanged"/>
             </StackPanel>
 
             <StackPanel>
                 <Label Content="Yksikkö:"/>
-                <Label/>
+                <Label Content="{Binding Product.Unit}"/>
             </StackPanel>
 
             <StackPanel>
                 <Label Content="A-hinta:"/>
-                <TextBox/>
+                <Label Content="{Binding Product.PricePerUnit}"/>
             </StackPanel>
 
             <StackPanel>
                 <Label Content="Yhteensä:"/>
-                <Label/>
+                <Label Content="{Binding RoundedTotal}"/>
             </StackPanel>
 
-            
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
