@@ -48,6 +48,9 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                     linesToDelete.Add(invoiceLine.ID);
                     unsavedChanges = true;
                 }
+                else {
+                    linesToAdd.Remove(invoiceLine);
+                }
             }
         }
 
