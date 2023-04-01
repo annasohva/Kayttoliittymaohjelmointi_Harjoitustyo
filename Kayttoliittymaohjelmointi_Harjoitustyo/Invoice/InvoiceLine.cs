@@ -6,7 +6,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// Luokka laskuriviä varten.
     /// </summary>
     public class InvoiceLine : INotifyPropertyChanged {
-        private Product product;
+        private Product product = new Product();
         private double quantity;
         private double roundedTotal;
         private double total;
@@ -69,13 +69,14 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// Päivittää laskurivin kokonaishinnan.
         /// </summary>
         public void UpdateTotal() {
-            Total = Product.PricePerUnit * Quantity;
-            RoundedTotal = Math.Round(Total, 2);
+            if (Product != null) {
+                Total = Product.PricePerUnit * Quantity;
+                RoundedTotal = Math.Round(Total, 2);
+            }
         }
 
         // kokonaissumman päivittymiseen liittyviä metodeita
-
-        private void OnPropertyChanged(string callerName = null) {
+        private void OnPropertyChanged(string callerName) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
 

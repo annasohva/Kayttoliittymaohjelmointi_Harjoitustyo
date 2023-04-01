@@ -72,7 +72,7 @@
         </GroupBox>
 
         <!--DataGrid laskuriveille-->
-        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10">
+        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10" CanUserDeleteRows="False">
             <DataGrid.Columns >
                 <DataGridTextColumn Width="20*" Header="Tuote" Binding="{Binding Product.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="20*" Header="Määrä" Binding="{Binding Quantity}"/>

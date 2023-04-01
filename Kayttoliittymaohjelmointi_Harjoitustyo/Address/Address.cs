@@ -12,7 +12,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public int ID { get; private set; } = -1;
+        public int ID { get; set; } = -1;
         public string Name {
             get {
                 return name;
@@ -71,7 +71,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             City = city;
         }
 
-        private void OnPropertyChanged(string callerName = null) {
+        private void OnPropertyChanged(string callerName) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
     }

@@ -15,10 +15,10 @@
         <!--Menu jossa on uuden laskun luonti, tuotteiden ja osoitetietojen hallinta sekä käyttöohje-->
         <Menu>
             <MenuItem Header="Hallinta">
-                <MenuItem Header="Uusi lasku..." Click="NewInvoice_Click"/>
+                <MenuItem Header="Uusi lasku..." Click="NewInvoice_MenuItem_Click"/>
                 <Separator/>
                 <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
-                <MenuItem Header="Osoitetiedot..."/>
+                <MenuItem Header="Osoitetiedot..." Click="Customers_MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>
@@ -26,7 +26,7 @@
         </Menu>
         
         <!--DataGrid näyttää listan laskuista-->
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}">
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ID}"/>
                 <DataGridTextColumn Header="Päiväys" IsReadOnly="True" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>

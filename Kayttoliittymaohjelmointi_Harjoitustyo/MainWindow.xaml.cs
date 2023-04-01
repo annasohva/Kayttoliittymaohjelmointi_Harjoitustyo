@@ -36,7 +36,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
         private void View_Invoice_Clicked(object sender, RoutedEventArgs e) {
             // löysin stackoverflowista ratkaisun miten saa senderistä datacontextin
-            var obj = sender as FrameworkElement; 
+            var obj = sender as FrameworkElement;
             var invoice = obj.DataContext as Invoice;
 
             var invoiceWindow = new ViewInvoiceWindow(invoice);
@@ -45,15 +45,20 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             UpdateDatacontext(); // päivitetään datacontexti, että käyttäjä näkee esim. laskun poistuneen
         }
 
-        private void NewInvoice_Click(object sender, RoutedEventArgs e) {
+        private void NewInvoice_MenuItem_Click(object sender, RoutedEventArgs e) { // kun uuden laskun lisäyspainiketta painetaan menussa
             var newInvoiceWindow = new NewInvoiceWindow();
             newInvoiceWindow.ShowDialog();
             UpdateDatacontext();
         }
 
-        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) {
+        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) { // kun tuotetietojen nappia painetaan menussa
             var productsWindow = new ProductsWindow();
             productsWindow.ShowDialog();
+        }
+
+        private void Customers_MenuItem_Click(object sender, RoutedEventArgs e) { // kun osoitetietojen nappia painetaan menussa
+            var customersWindow = new CustomersWindow();
+            customersWindow.ShowDialog();
         }
     }
 }

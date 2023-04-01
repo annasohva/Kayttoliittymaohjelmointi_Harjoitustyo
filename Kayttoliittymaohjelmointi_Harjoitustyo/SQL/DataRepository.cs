@@ -204,7 +204,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                     // luodaan itse lasku
                     Invoice invoice = new Invoice(address, date, duedate, invoiceId, details);
 
-                    GetInvoiceLines(invoice);
+                    GetInvoiceLines(invoice); // haetaan laskulle laskurivit
 
                     invoices.Add(invoice);
                 }
@@ -213,6 +213,10 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             return invoices;
         }
 
+        /// <summary>
+        /// Hakee tietyn laskun laskurivit ja lisää ne laskulle.
+        /// </summary>
+        /// <param name="invoice">Lasku jonka laskurivit haetaan</param>
         private static void GetInvoiceLines(Invoice invoice) {
             using (MySqlConnection conn = new MySqlConnection(localWithDb)) {
                 conn.Open();

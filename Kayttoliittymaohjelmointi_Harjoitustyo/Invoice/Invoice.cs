@@ -18,7 +18,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public DateOnly Date { get; private set; }
         public DateOnly DueDate { get; set; }
         public Address BillerAddress { get; private set; }
-        private Address customerAddress;
+        private Address customerAddress = new Address();
         public Address CustomerAddress {
             get {
                 return customerAddress;
@@ -79,11 +79,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             Lines.Add(line);
         }
 
-        // seuraavat metodit on sovellettu stackoverflowsta, ja auttavat laskun kokonaissumman päivityksessä
-        private void OnPropertyChanged(string callerName = null) {
+        private void OnPropertyChanged(string callerName) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
 
+        // seuraavat metodit on sovellettu stackoverflowsta, ja auttavat laskun kokonaissumman päivityksessä
         private void Lines_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             OnPropertyChanged("Total");
 
@@ -97,7 +97,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             }
         }
 
-        private void Line_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+        private void Line_PropertyChanged(object? sender, PropertyChangedEventArgs e) {
             OnPropertyChanged("Total");
         }
     }

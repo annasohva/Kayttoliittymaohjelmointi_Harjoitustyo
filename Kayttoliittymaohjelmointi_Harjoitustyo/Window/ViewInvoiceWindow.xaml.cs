@@ -97,10 +97,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             Invoice invoice = this.DataContext as Invoice;
 
             var newLineWindow = new NewLineWindow(invoice);
-            newLineWindow.ShowDialog();
+            var lineAdded = newLineWindow.ShowDialog();
 
-            linesToAdd.Add(invoice.Lines.Last());
-            unsavedChanges = true;
+            if (lineAdded == true) {
+                linesToAdd.Add(invoice.Lines.Last());
+                unsavedChanges = true;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) { // kun ikkunaa yritetään sulkea

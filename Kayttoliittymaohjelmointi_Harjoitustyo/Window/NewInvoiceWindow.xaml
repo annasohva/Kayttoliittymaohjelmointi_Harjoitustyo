@@ -11,7 +11,7 @@
         <Menu>
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
-                <MenuItem Header="Osoitetiedot..."/>
+                <MenuItem Header="Osoitetiedot..." Click="Customers_MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>
@@ -73,7 +73,7 @@
         </GroupBox>
 
         <!--DataGrid laskuriveille-->
-        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10">
+        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10" CanUserDeleteRows="False">
             <DataGrid.Columns >
                 <DataGridTextColumn Width="20*" Header="Tuote" Binding="{Binding Product.Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="20*" Header="Määrä" Binding="{Binding Quantity}"/>

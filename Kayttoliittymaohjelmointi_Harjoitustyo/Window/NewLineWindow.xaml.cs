@@ -20,6 +20,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// </summary>
     public partial class NewLineWindow : Window { 
         private Invoice invoiceRef;
+        private ObservableCollection<Product> productsRef;
         /// <summary>
         /// Uuden laskurivin luonti -ikkuna.
         /// </summary>
@@ -29,11 +30,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
             invoiceRef = invoice;
 
-            var products = DataRepository.GetProducts();
+            productsRef = DataRepository.GetProducts();
+            comProducts.ItemsSource = productsRef;
 
-            comProducts.ItemsSource = products;
             comProducts.DisplayMemberPath = "Name";
-            comProducts.SelectedItem = products[0];
+            comProducts.SelectedItem = productsRef[0];
 
             this.DataContext = new InvoiceLine((Product)comProducts.SelectedItem, 0);
         }
@@ -63,15 +64,22 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         private void AddLine_Clicked(object sender, RoutedEventArgs e) { // kun painetaan lisää laskurivi -nappia
             var line = (InvoiceLine)this.DataContext;
             invoiceRef.Lines.Add(line);
+            DialogResult = true;
             Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e) { // kun painetaan peru -nappia
+            DialogResult = false;
             Close();
         }
 
-        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) {
+        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) { // kun avataan tuotetietojen muokkaus menusta
+            var productsWindow = new ProductsWindow();
+            productsWindow.ShowDialog();
 
+            productsRef = DataRepository.GetProducts();
+            comProducts.ItemsSource = productsRef;
+            comProducts.SelectedItem = productsRef[0];
         }
     }
 }
