@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
         mc:Ignorable="d"
-        Title="ProductsWindow" Height="450" Width="800">
+        Title="Tuotetietojen hallinta" Height="450" Width="400" Closing="Window_Closing">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
         
+        <!--Menu josta löytyy käyttöohje-->
+        <Menu>
+            <MenuItem Header="Ohje">
+                <MenuItem Header="Käyttöohje..."/>
+            </MenuItem>
+        </Menu>
+
+        <!--DataGridissä listataan kaikki tuotteet ja se mahdollistaa niiden muokkauksen-->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="1*" Header="ID" IsReadOnly="True" Binding="{Binding ID}"/>
+                <DataGridTextColumn Width="2*" Header="Tuotenimi" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="2*" Header="Yksikkö" Binding="{Binding Unit}"/>
+                <DataGridTextColumn Width="2*" Header="A-hinta" Binding="{Binding PricePerUnit}"/>
+
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Poista" Click="DeleteProduct_Clicked"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Tallenna-nappi-->
+        <Button Grid.Row="2" Content="Tallenna tiedot tietokantaan" Click="SaveChanges_Clicked"/>
     </Grid>
 </Window>

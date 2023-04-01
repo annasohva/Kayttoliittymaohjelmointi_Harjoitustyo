@@ -69,5 +69,9 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         private void Cancel_Click(object sender, RoutedEventArgs e) { // kun painetaan peru -nappia
             Close();
         }
+
+        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

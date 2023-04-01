@@ -10,7 +10,7 @@
         <!--Menussa on mahdollista hallita tuotetietoja ja osoitetietoja, sekä avata käyttöohje-->
         <Menu>
             <MenuItem Header="Hallinta">
-                <MenuItem Header="Tuotekatalogi..."/>
+                <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
                 <MenuItem Header="Osoitetiedot..."/>
             </MenuItem>
             <MenuItem Header="Ohje">

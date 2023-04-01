@@ -57,8 +57,8 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         private void Save_Btn_Clicked(object sender, RoutedEventArgs e) { // kun tallenna-nappia painetaan tallennetaan muutokset
             Invoice invoice = this.DataContext as Invoice;
 
-            foreach (var line in linesToDelete) {
-                DataRepository.DeleteInvoiceLine(line);
+            foreach (var lineID in linesToDelete) {
+                DataRepository.DeleteInvoiceLine(lineID);
             }
 
             foreach (var line in linesToAdd) {

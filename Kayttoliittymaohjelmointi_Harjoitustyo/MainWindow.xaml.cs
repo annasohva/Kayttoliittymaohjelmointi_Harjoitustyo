@@ -24,12 +24,12 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
-            DataRepository.CreateDb();
 
-            FetchInvoices();
+            DataRepository.CreateDb();
+            UpdateDatacontext();
         }
 
-        private void FetchInvoices() { // hakee laskut tietokannasta ja asettaa ne datacontextiin
+        private void UpdateDatacontext() { // hakee laskut tietokannasta ja asettaa ne datacontextiin
             var invoices = DataRepository.GetInvoices();
             this.DataContext = invoices;
         }
@@ -42,13 +42,18 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             var invoiceWindow = new ViewInvoiceWindow(invoice);
             invoiceWindow.ShowDialog();
 
-            FetchInvoices(); // päivitetään datacontexti, että käyttäjä näkee esim. laskun poistuneen
+            UpdateDatacontext(); // päivitetään datacontexti, että käyttäjä näkee esim. laskun poistuneen
         }
 
         private void NewInvoice_Click(object sender, RoutedEventArgs e) {
             var newInvoiceWindow = new NewInvoiceWindow();
             newInvoiceWindow.ShowDialog();
-            FetchInvoices();
+            UpdateDatacontext();
+        }
+
+        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) {
+            var productsWindow = new ProductsWindow();
+            productsWindow.ShowDialog();
         }
     }
 }

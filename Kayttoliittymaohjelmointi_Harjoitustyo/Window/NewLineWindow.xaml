@@ -10,7 +10,7 @@
         <!--Menusta voidaan hallita tuotteita ja lukea käyttöohje-->
         <Menu Height="20" VerticalAlignment="Top">
             <MenuItem Header="Hallinta">
-                <MenuItem Header="Tuotekatalogi..."/>
+                <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
             </MenuItem>
             <MenuItem Header="Ohje">
                 <MenuItem Header="Käyttöohje..."/>

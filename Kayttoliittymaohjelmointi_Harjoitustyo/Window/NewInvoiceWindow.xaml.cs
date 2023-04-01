@@ -75,5 +75,9 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                 invoiceRef.DueDate = DateOnly.FromDateTime((DateTime)dueDatePicker.SelectedDate);
             }
         }
+
+        private void Products_MenuItem_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

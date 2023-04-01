@@ -17,7 +17,7 @@
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Uusi lasku..." Click="NewInvoice_Click"/>
                 <Separator/>
-                <MenuItem Header="Tuotekatalogi..."/>
+                <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
                 <MenuItem Header="Osoitetiedot..."/>
             </MenuItem>
             <MenuItem Header="Ohje">
