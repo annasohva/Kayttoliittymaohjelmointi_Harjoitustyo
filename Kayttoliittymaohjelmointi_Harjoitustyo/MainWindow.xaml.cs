@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -59,6 +60,19 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         private void Customers_MenuItem_Click(object sender, RoutedEventArgs e) { // kun osoitetietojen nappia painetaan menussa
             var customersWindow = new CustomersWindow();
             customersWindow.ShowDialog();
+        }
+
+        private void DeleteInvoice_Clicked(object sender, RoutedEventArgs e) {
+            var obj = sender as FrameworkElement;
+            var invoice = obj.DataContext as Invoice;
+
+            var result = MessageBox.Show($"Haluatko varmasti poistaa laskun {invoice.ID}?", "Poista lasku", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) {
+                DataRepository.DeleteInvoice(invoice.ID);
+                MessageBox.Show("Lasku on poistettu tietokannasta.", "Viesti");
+                UpdateDatacontext();
+            }
         }
     }
 }

@@ -7,13 +7,10 @@
         mc:Ignorable="d"
         Title="Uusi laskurivi" Height="200" Width="500" ResizeMode="NoResize">
     <Grid>
-        <!--Menusta voidaan hallita tuotteita ja lukea käyttöohje-->
+        <!--Menusta voidaan hallita tuotteita-->
         <Menu Height="20" VerticalAlignment="Top">
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
-            </MenuItem>
-            <MenuItem Header="Ohje">
-                <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
 

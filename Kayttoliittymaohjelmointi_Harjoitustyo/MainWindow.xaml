@@ -12,16 +12,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--Menu jossa on uuden laskun luonti, tuotteiden ja osoitetietojen hallinta sekä käyttöohje-->
+        <!--Menu jossa on uuden laskun luonti, tuotteiden ja osoitetietojen hallinta-->
         <Menu>
-            <MenuItem Header="Hallinta">
+            <MenuItem Header="Lasku">
                 <MenuItem Header="Uusi lasku..." Click="NewInvoice_MenuItem_Click"/>
-                <Separator/>
+            </MenuItem>
+            <MenuItem Header="Hallinta">
                 <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
                 <MenuItem Header="Osoitetiedot..." Click="Customers_MenuItem_Click"/>
-            </MenuItem>
-            <MenuItem Header="Ohje">
-                <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
         
@@ -39,7 +37,16 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Tarkastele" Click="View_Invoice_Clicked"/>
+                            <Button Content="Tarkastele" Click="View_Invoice_Clicked" Width="80" Margin="10,0,10,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--Laskulla on nappi poistaa se-->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Poista" Click="DeleteInvoice_Clicked" Width="80" Margin="10,0,10,0"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

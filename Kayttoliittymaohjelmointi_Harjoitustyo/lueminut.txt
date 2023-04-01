@@ -1,0 +1,1 @@
+ConnectionString löytyy tiedostosta SQL/DataRepository.cs muuttujista local ja localWithDb.

@@ -7,14 +7,11 @@
         mc:Ignorable="d"
         Title="Uusi lasku" Height="600" Width="500" Closing="Window_Closing">
     <StackPanel>
-        <!--Menussa on mahdollista hallita tuotetietoja ja osoitetietoja, sekä avata käyttöohje-->
+        <!--Menussa on mahdollista hallita tuotetietoja ja osoitetietoja-->
         <Menu>
             <MenuItem Header="Hallinta">
                 <MenuItem Header="Tuotetiedot..." Click="Products_MenuItem_Click" />
                 <MenuItem Header="Osoitetiedot..." Click="Customers_MenuItem_Click"/>
-            </MenuItem>
-            <MenuItem Header="Ohje">
-                <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
 

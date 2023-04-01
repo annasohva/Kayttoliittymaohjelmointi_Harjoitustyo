@@ -7,13 +7,10 @@
         mc:Ignorable="d"
         Title="Tarkastele laskua" Height="600" Width="500" Closing="Window_Closing">
     <StackPanel>
-        <!--Menussa on mahdollista poistaa lasku, sekä avata käyttöohje-->
+        <!--Menussa on mahdollista poistaa lasku-->
         <Menu>
             <MenuItem Header="Lasku">
                 <MenuItem Header="Poista lasku..." Click="DeleteInvoice_MenuItem_Click" />
-            </MenuItem>
-            <MenuItem Header="Ohje">
-                <MenuItem Header="Käyttöohje..."/>
             </MenuItem>
         </Menu>
         
