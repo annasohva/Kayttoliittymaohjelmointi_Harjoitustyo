@@ -44,5 +44,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
 
             FetchInvoices(); // päivitetään datacontexti, että käyttäjä näkee esim. laskun poistuneen
         }
+
+        private void NewInvoice_Click(object sender, RoutedEventArgs e) {
+            var newInvoiceWindow = new NewInvoiceWindow();
+            newInvoiceWindow.ShowDialog();
+            FetchInvoices();
+        }
     }
 }

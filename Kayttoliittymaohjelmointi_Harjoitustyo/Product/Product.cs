@@ -44,6 +44,11 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         /// <summary>
         /// Luo uuden tuote-olion.
         /// </summary>
+        public Product() { }
+
+        /// <summary>
+        /// Luo uuden tuote-olion.
+        /// </summary>
         /// <param name="name">Tuotteen nimi</param>
         /// <param name="unit">Yksikkö (kpl, m)</param>
         /// <param name="pricePerUnit">A-hinta</param>

@@ -5,8 +5,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kayttoliittymaohjelmointi_Harjoitustyo"
         mc:Ignorable="d"
-        Title="NewInvoiceWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Uusi lasku" Height="600" Width="500" Closing="Window_Closing">
+    <StackPanel>
+        <!--Menussa on mahdollista hallita tuotetietoja ja osoitetietoja, sekä avata käyttöohje-->
+        <Menu>
+            <MenuItem Header="Hallinta">
+                <MenuItem Header="Tuotekatalogi..."/>
+                <MenuItem Header="Osoitetiedot..."/>
+            </MenuItem>
+            <MenuItem Header="Ohje">
+                <MenuItem Header="Käyttöohje..."/>
+            </MenuItem>
+        </Menu>
+
+        <!--Grid asettelee laskuttajan ja asiakkaan tiedot sekä päiväyksen kivasti-->
+        <Grid Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Laskuttajan osoitetiedot-->
+            <GroupBox Header="Laskuttaja">
+                <StackPanel>
+                    <Label Content="{Binding BillerAddress.Name}"/>
+                    <Label Content="{Binding BillerAddress.StreetAddress}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding BillerAddress.PostalCode}"/>
+                        <Label Content="{Binding BillerAddress.City}"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!--Päiväys, eräpäivä ja laskun numero-->
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Päiväys:"/>
+                    <Label Content="{Binding Date}" ContentStringFormat="dd.MM.yyyy"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Laskun numero:"/>
+                    <Label Content="Uusi lasku"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <Label Content="Eräpäivä:"/>
+                    <DatePicker x:Name="dueDatePicker" SelectedDateChanged="DueDatePicker_SelectedDateChanged" />
+                </StackPanel>
+            </StackPanel>
+            <GroupBox Header="Asiakas" Grid.Row="1">
+                <StackPanel>
+                    <ComboBox x:Name="comCustomer" SelectionChanged="ComCustomer_SelectionChanged"/>
+                    <Label Content="{Binding CustomerAddress.StreetAddress}"/>
+                    <Label Content="{Binding CustomerAddress.PostalCode}"/>
+                    <Label Content="{Binding CustomerAddress.City}"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <!--Kenttä lisätiedoille-->
+        <GroupBox Header="Lisätiedot" Margin="10,0,10,0">
+            <TextBox Text="{Binding Details}"/>
+        </GroupBox>
+
+        <!--DataGrid laskuriveille-->
+        <DataGrid x:Name="dataGridLines" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Disabled" Margin="10">
+            <DataGrid.Columns >
+                <DataGridTextColumn Width="20*" Header="Tuote" Binding="{Binding Product.Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="20*" Header="Määrä" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Width="20*" Header="Yksikkö" Binding="{Binding Product.Unit}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="20*" Header="A-hinta" Binding="{Binding Product.PricePerUnit}"/>
+                <DataGridTextColumn Width="20*" Header="Yhteensä" Binding="{Binding RoundedTotal}" IsReadOnly="True"/>
+
+                <!--Jokaisella laskurivillä on erikseen oma poista-nappinsa-->
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Poista" Click="RemoveLine_Clicked" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Lisää laskurivi-nappi, Kokonaishinta-label ja Tallenna-nappi-->
+        <Grid>
+            <Button Content="Lisää laskurivi" Width="80" HorizontalAlignment="Left" Margin="10,0,0,0" Click="AddLine_Clicked"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Label Content="Kokonaishinta:"/>
+                <Label x:Name="lblTotal" Content="{Binding Total}"/>
+                <Label Content="€"/>
+            </StackPanel>
+        </Grid>
+        <Button Height="25" Width="80" Content="Tallenna" HorizontalAlignment="Right" Margin="0,10,10,0" Click="Save_Btn_Clicked"/>
+    </StackPanel>
 </Window>

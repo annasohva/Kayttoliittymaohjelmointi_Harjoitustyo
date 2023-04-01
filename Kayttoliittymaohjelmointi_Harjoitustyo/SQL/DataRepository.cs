@@ -43,7 +43,14 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
                     "VALUES(@date, @duedate, @details, @cName, @cStreetAddr, @cPostalCode, @cCity);", conn);
                 cmd1.Parameters.AddWithValue("@date", invoice.Date);
                 cmd1.Parameters.AddWithValue("@duedate", invoice.DueDate);
-                cmd1.Parameters.AddWithValue("@details", invoice.Details);
+
+                if (invoice.Details == string.Empty) {
+                    cmd1.Parameters.AddWithValue("@details", "-");
+                }
+                else {
+                    cmd1.Parameters.AddWithValue("@details", invoice.Details);
+                }
+                    
                 cmd1.Parameters.AddWithValue("@cName", invoice.CustomerAddress.Name);
                 cmd1.Parameters.AddWithValue("@cStreetAddr", invoice.CustomerAddress.StreetAddress);
                 cmd1.Parameters.AddWithValue("@cPostalCode", invoice.CustomerAddress.PostalCode);

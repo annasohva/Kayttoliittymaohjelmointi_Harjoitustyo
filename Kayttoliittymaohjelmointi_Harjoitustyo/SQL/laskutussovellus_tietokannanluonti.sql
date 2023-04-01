@@ -50,7 +50,8 @@ CREATE TABLE Laskurivit -- tuotteet voi muuttua tai poistua niin samat tiedot ta
 
 -- lisätään tauluihin tietoja
 INSERT INTO tuotteet(Tuotenimi,Yksikko,Yksikkohinta)
-	VALUES('Parketti','m2',89.50),
+	VALUES('Tyo','t',60),
+	('Parketti','m2',89.50),
 	('Alusmateriaali','m2',2.38),
 	('Liima','l',17.63),
 	('Maali','l',13.69),

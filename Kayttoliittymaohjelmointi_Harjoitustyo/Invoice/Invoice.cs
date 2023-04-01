@@ -18,7 +18,16 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
         public DateOnly Date { get; private set; }
         public DateOnly DueDate { get; set; }
         public Address BillerAddress { get; private set; }
-        public Address CustomerAddress { get; private set; }
+        private Address customerAddress;
+        public Address CustomerAddress {
+            get {
+                return customerAddress;
+            }
+            set {
+                customerAddress = value;
+                OnPropertyChanged("CustomerAddress");
+            }
+        }
         public string Details { get; set; } = string.Empty;
         public double Total {
             get {
@@ -51,6 +60,7 @@ namespace Kayttoliittymaohjelmointi_Harjoitustyo {
             Details = details;
 
             Lines.CollectionChanged += Lines_CollectionChanged;
+            
         }
 
         /// <summary>

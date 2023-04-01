@@ -15,7 +15,7 @@
         <!--Menu jossa on uuden laskun luonti, tuotteiden ja osoitetietojen hallinta sekä käyttöohje-->
         <Menu>
             <MenuItem Header="Hallinta">
-                <MenuItem Header="Uusi lasku..."/>
+                <MenuItem Header="Uusi lasku..." Click="NewInvoice_Click"/>
                 <Separator/>
                 <MenuItem Header="Tuotekatalogi..."/>
                 <MenuItem Header="Osoitetiedot..."/>

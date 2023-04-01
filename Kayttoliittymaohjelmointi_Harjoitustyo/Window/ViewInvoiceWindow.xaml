@@ -81,7 +81,7 @@
                 <DataGridTextColumn Width="20*" Header="Yhteensä" Binding="{Binding RoundedTotal}" IsReadOnly="True"/>
                 
                 <!--Jokaisella laskurivillä on erikseen oma poista-nappinsa-->
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="40">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Poista" Click="RemoveLine_Clicked" />

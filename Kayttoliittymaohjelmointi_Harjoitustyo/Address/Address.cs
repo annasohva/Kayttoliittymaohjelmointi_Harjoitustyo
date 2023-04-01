@@ -1,13 +1,54 @@
-﻿namespace Kayttoliittymaohjelmointi_Harjoitustyo {
+﻿using System.ComponentModel;
+
+namespace Kayttoliittymaohjelmointi_Harjoitustyo {
     /// <summary>
     /// Luokka osoitetietoja varten.
     /// </summary>
-    public class Address {
+    public class Address : INotifyPropertyChanged {
+        private string name = string.Empty;
+        private string streetAddress = string.Empty;
+        private string postalCode = string.Empty;
+        private string city = string.Empty;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public int ID { get; private set; } = -1;
-        public string Name { get; set; } = string.Empty; // ominaisuudet on private set, koska niitä muutetaan metodien avulla
-        public string StreetAddress { get; set; } = string.Empty;
-        public string PostalCode { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
+        public string Name {
+            get {
+                return name;
+            }
+            set {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        public string StreetAddress {
+            get {
+                return streetAddress;
+            }
+            set {
+                streetAddress = value;
+                OnPropertyChanged("StreetAddress");
+            }
+        }
+        public string PostalCode {
+            get {
+                return postalCode;
+            }
+            set {
+                postalCode = value;
+                OnPropertyChanged("PostalCode");
+            }
+        }
+        public string City {
+            get {
+                return city;
+            }
+            set {
+                city = value;
+                OnPropertyChanged("City");
+            }
+        }
 
         /// <summary>
         /// Luo uuden osoitetiedon.
@@ -28,6 +69,10 @@
             StreetAddress= streetAddress;
             PostalCode = postalCode;
             City = city;
+        }
+
+        private void OnPropertyChanged(string callerName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
     }
 }
