@@ -1,7 +1,7 @@
 Laskutussovellus käyttöliittymällä.
 
 Mitä opin projektissa?
-- WPF-käyttöliittymän suunnittelu ja toteutus.
+- WPF-käyttöliittymän suunnittelu ja toteutus C#- ja XAML -kielillä.
 - SQL-tietokannan luonti ja sen yhdistäminen projektiin.
 - Projektin refaktorointi, jotta se toteuttaa paremmin Olio-ohjelmoinnin periaatteita.
 - Koodin dokumentointi kommentoimalla.
